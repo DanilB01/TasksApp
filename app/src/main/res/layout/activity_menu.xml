@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/accent_yellow_light"
+    tools:context=".menu.MenuActivity">
+
+    <ImageView
+        android:id="@+id/menuProfileImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_profile_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/accent_yellow"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/menuProfileImage">
+
+        <LinearLayout
+            android:id="@+id/menuItemTasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginStart="9dp"
+                android:src="@drawable/ic_tick" />
+
+            <TextView
+                android:id="@+id/menuTasksTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:textColor="@color/text"
+                android:text="Все завершенные задачи" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menuItemNewTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_plus" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:textColor="@color/text"
+                android:text="Новая задача" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menuItemProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_profile" />
+
+            <TextView
+                android:id="@+id/menuProfileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:textColor="@color/text"
+                android:text="Авторизоваться" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/menuItemAuth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingTop="16dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_login" />
+
+            <TextView
+                android:id="@+id/menuAuthTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:textColor="@color/text"
+                android:text="Зарегистрироваться" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
