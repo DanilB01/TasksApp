@@ -49,13 +49,11 @@
         app:tabTextAppearance="@style/TabTextAppearance">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/registerTabItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Зарегистрироваться" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/loginTabItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Вход" />
