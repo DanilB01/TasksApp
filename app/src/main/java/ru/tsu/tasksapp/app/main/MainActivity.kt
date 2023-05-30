@@ -14,8 +14,28 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewBinding.mainMenuIcon.setOnClickListener {
-            startActivity(Intent(this, MenuActivity::class.java))
+        initView()
+    }
+
+    private fun initView() = with(viewBinding) {
+        mainMenuIcon.setOnClickListener {
+            startActivity(Intent(this@MainActivity, MenuActivity::class.java))
         }
+
+        addTasksFloatingButton.setOnClickListener {
+            ChooseTaskTypeBottomSheetDialog().show(supportFragmentManager, "")
+        }
+
+        mainBottomNav.setOnItemSelectedListener {
+            mainTitle.text = when (it.itemId) {
+                R.id.item_main_home -> "Главная"
+                R.id.item_main_calendar -> "Календарь"
+                R.id.item_main_tasks -> "Регулярные задачи"
+                else -> ""
+            }
+            true
+        }
+
+        mainBottomNav.selectedItemId = R.id.item_main_home
     }
 }

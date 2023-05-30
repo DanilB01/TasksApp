@@ -10,13 +10,13 @@
         android:id="@+id/mainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="22sp"
-        android:textColor="@color/text"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
+        android:textColor="@color/text"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Главная" />
 
     <ImageView
@@ -35,6 +35,19 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@id/mainBottomNav"
         app:layout_constraintTop_toTopOf="@id/mainTitle" />
+
+    <ImageView
+        android:id="@+id/addTasksFloatingButton"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/shape_circle"
+        android:elevation="8dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_plus"
+        app:layout_constraintBottom_toTopOf="@id/mainBottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/accent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mainBottomNav"
