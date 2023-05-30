@@ -1,16 +1,16 @@
-package ru.tsu.tasksapp.login
+package ru.tsu.tasksapp.app.login
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import ru.tsu.tasksapp.R
+import ru.tsu.tasksapp.app.login.model.LoginScreenState
 import ru.tsu.tasksapp.databinding.ActivityLoginBinding
-import ru.tsu.tasksapp.login.model.LoginScreenState
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
@@ -20,21 +20,34 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setupTabLayout()
+        initView()
         observeData()
     }
 
-    private fun observeData() {
-        viewModel.loginScreenState.observe(this) {
+    private fun observeData() = with(viewModel) {
+        loginScreenState.observe(this@LoginActivity) {
             when (it) {
                 LoginScreenState.REGISTER -> setRegisterInfo()
                 LoginScreenState.LOGIN -> setLoginInfo()
             }
         }
+
+        errorMessage.observe(this@LoginActivity) {
+            it?.let { message ->
+                Snackbar
+                    .make(viewBinding.root, message, Snackbar.LENGTH_SHORT)
+                    .show()
+                onErrorHandled()
+            }
+        }
+
+        isLoginCompleted.observe(this@LoginActivity) {
+            if (it) finish()
+        }
     }
 
-    private fun setupTabLayout() {
-        viewBinding.loginTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+    private fun initView() = with(viewBinding) {
+        loginTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 viewModel.onTabSelected(tab?.position)
             }
@@ -42,6 +55,17 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
             override fun onTabReselected(tab: TabLayout.Tab?) = Unit
         })
+
+        loginButton.setOnClickListener {
+            viewModel.login(
+                emailText.text.toString(),
+                passwordText.text.toString()
+            )
+        }
+
+        continueButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setRegisterInfo() {
