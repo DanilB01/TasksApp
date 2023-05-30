@@ -2,12 +2,14 @@ package ru.tsu.tasksapp.app.menu
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.login.LoginActivity
+import ru.tsu.tasksapp.app.profile.ProfileActivity
 import ru.tsu.tasksapp.databinding.ActivityMenuBinding
 
 class MenuActivity : AppCompatActivity(R.layout.activity_menu) {
@@ -39,6 +41,16 @@ class MenuActivity : AppCompatActivity(R.layout.activity_menu) {
                 }
             }
         }
+
+        menuItemProfile.setOnClickListener {
+            viewModel.isLoggedIn.value?.let {
+                if (it) {
+                    startActivity(Intent(this@MenuActivity, ProfileActivity::class.java))
+                } else {
+                    startActivity(Intent(this@MenuActivity, LoginActivity::class.java))
+                }
+            }
+        }
     }
 
     private fun observeData() = with(viewModel) {
@@ -52,7 +64,7 @@ class MenuActivity : AppCompatActivity(R.layout.activity_menu) {
     }
 
     private fun setLoggedInfo() = with(viewBinding) {
-        menuProfileImage.isVisible = false
+        menuProfileImage.visibility = View.INVISIBLE
         menuTasksTitle.text = "Завершенные задачи"
         menuProfileTitle.text = "Профиль"
         menuAuthTitle.text = "Выход"
@@ -60,7 +72,7 @@ class MenuActivity : AppCompatActivity(R.layout.activity_menu) {
     }
 
     private fun setWithoutLoginInfo() = with(viewBinding) {
-        menuProfileImage.isVisible = true
+        menuProfileImage.visibility = View.VISIBLE
         menuTasksTitle.text = "Все завершенные задачи"
         menuProfileTitle.text = "Авторизоваться"
         menuAuthTitle.text = "Зарегистрироваться"
