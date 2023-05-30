@@ -5,15 +5,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
+import ru.tsu.tasksapp.app.task.single.addedit.dialog.DatePickerListener
+import ru.tsu.tasksapp.app.task.single.addedit.dialog.PickUpDateBottomSheetDialog
 import ru.tsu.tasksapp.app.task.single.addedit.dialog.PickUpTimeBottomSheetDialog
 import ru.tsu.tasksapp.app.task.single.addedit.dialog.TimePickerListener
 import ru.tsu.tasksapp.databinding.ActivityAddEditSingleTaskBinding
 import ru.tsu.tasksapp.domain.task.single.SingleTask
 
-class AddEditSingleTaskActivity : AppCompatActivity(R.layout.activity_add_edit_single_task),
-TimePickerListener{
+class AddEditSingleTaskActivity :
+    AppCompatActivity(R.layout.activity_add_edit_single_task),
+    TimePickerListener,
+    DatePickerListener {
 
     private val viewBinding: ActivityAddEditSingleTaskBinding by viewBinding()
     private val viewModel: AddEditSingleTaskViewModel by viewModels()
@@ -46,6 +51,14 @@ TimePickerListener{
         singleTaskItemNotification.setOnClickListener {
             viewModel.setIsNotificationTimeSelecting(true)
             PickUpTimeBottomSheetDialog().show(supportFragmentManager, "")
+        }
+
+        singleTaskItemDate.setOnClickListener {
+            PickUpDateBottomSheetDialog().show(supportFragmentManager, "")
+        }
+
+        addEditSingleTaskName.doOnTextChanged { text, start, before, count ->
+            viewModel.updateTaskName(text.toString())
         }
     }
 
@@ -85,5 +98,9 @@ TimePickerListener{
 
     override fun getTime(time: String) {
         viewModel.setTime(time)
+    }
+
+    override fun getDate(date: String) {
+        viewModel.setDate(date)
     }
 }

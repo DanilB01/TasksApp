@@ -29,4 +29,12 @@ class AddEditSingleTaskViewModel: ViewModel() {
         }
         isNotificationTimeSelecting = null
     }
+
+    fun setDate(date: String) {
+        _currentTask.value = _currentTask.value?.copy(date = date)
+    }
+
+    fun updateTaskName(name: String) {
+        _currentTask.value = _currentTask.value?.copy(name = name)
+    }
 }
