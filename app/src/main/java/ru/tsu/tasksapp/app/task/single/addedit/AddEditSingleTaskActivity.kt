@@ -94,6 +94,11 @@ class AddEditSingleTaskActivity :
         } else {
             singleTaskNotificationIcon.clearColorFilter()
         }
+
+        addEditSaveButton.isVisible =
+            task.name != null && task.time != null &&
+                task.date != null && task.notificationTime != null &&
+                    task.name.isNotEmpty()
     }
 
     override fun getTime(time: String) {
