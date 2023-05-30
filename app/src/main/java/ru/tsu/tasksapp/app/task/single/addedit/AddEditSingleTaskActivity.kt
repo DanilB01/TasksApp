@@ -30,6 +30,10 @@ class AddEditSingleTaskActivity :
     }
 
     private fun initView() = with(viewBinding) {
+        intent.extras?.getString("currentTask")?.let {
+            // TODO: add init current task to edit
+        }
+
         addEditSingleTaskBackIcon.setOnClickListener {
             finish()
         }
@@ -59,6 +63,10 @@ class AddEditSingleTaskActivity :
 
         addEditSingleTaskName.doOnTextChanged { text, start, before, count ->
             viewModel.updateTaskName(text.toString())
+        }
+
+        addEditSaveButton.setOnClickListener {
+            viewModel.saveSingleTask()
         }
     }
 

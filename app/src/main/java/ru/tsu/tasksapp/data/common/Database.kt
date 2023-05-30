@@ -12,6 +12,7 @@ object Database {
 
     fun getCredentialDao() = database.getCredentialDao()
     fun getSessionDao() = database.getSessionDao()
+    fun getSingleTaskDao() = database.getSingleTaskDao()
 
     private fun build(context: Context) = Room.databaseBuilder(
         context,

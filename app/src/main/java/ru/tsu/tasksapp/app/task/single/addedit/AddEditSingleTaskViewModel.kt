@@ -3,16 +3,27 @@ package ru.tsu.tasksapp.app.task.single.addedit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.tsu.tasksapp.domain.task.single.SingleTask
+import ru.tsu.tasksapp.domain.task.single.SingleTaskRepository
 
 class AddEditSingleTaskViewModel: ViewModel() {
+    private val singleTaskRepository = SingleTaskRepository()
+
     private val _currentTask = MutableLiveData<SingleTask>()
     val currentTask: LiveData<SingleTask> = _currentTask
 
     private var isNotificationTimeSelecting: Boolean? = null
+    private var isEditingTask: Boolean = false
 
     init {
         _currentTask.value = SingleTask()
+    }
+
+    fun initCurrentTask(task: SingleTask) {
+        _currentTask.value = task
+        isEditingTask = true
     }
 
     fun setIsNotificationTimeSelecting(flag: Boolean) {
@@ -36,5 +47,16 @@ class AddEditSingleTaskViewModel: ViewModel() {
 
     fun updateTaskName(name: String) {
         _currentTask.value = _currentTask.value?.copy(name = name)
+    }
+
+    fun saveSingleTask() {
+        viewModelScope.launch {
+            val task = _currentTask.value ?: return@launch
+            if(isEditingTask) {
+                singleTaskRepository.updateSingleTask(task)
+            } else {
+                singleTaskRepository.addSingleTask(task)
+            }
+        }
     }
 }
