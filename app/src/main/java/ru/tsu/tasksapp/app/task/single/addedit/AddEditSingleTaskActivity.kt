@@ -66,6 +66,7 @@ class AddEditSingleTaskActivity :
 
         addEditSaveButton.setOnClickListener {
             viewModel.saveSingleTask()
+            finish()
         }
     }
 

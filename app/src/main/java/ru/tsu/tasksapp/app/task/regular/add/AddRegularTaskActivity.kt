@@ -91,6 +91,11 @@ class AddRegularTaskActivity:
             task.name != null && task.time != null &&
                     task.regularity != null && task.notificationTime != null &&
                     task.name.isNotEmpty()
+
+        addRegularTaskSaveButton.setOnClickListener {
+            viewModel.saveTask()
+            finish()
+        }
     }
 
     override fun getTime(time: String) {

@@ -8,7 +8,8 @@ class SingleTaskRepository {
         if (task.name == null ||
             task.time == null ||
             task.date == null ||
-            task.notificationTime == null
+            task.notificationTime == null ||
+            task.creationTimestamp == null
         ) {
             return
         }
@@ -18,7 +19,8 @@ class SingleTaskRepository {
                 time = task.time,
                 date = task.date,
                 notificationTime = task.notificationTime,
-                status = task.status.name
+                status = task.status.name,
+                creationTimestamp = task.creationTimestamp.toString()
             )
         )
     }
@@ -27,7 +29,8 @@ class SingleTaskRepository {
         if (task.name == null ||
             task.time == null ||
             task.date == null ||
-            task.notificationTime == null
+            task.notificationTime == null ||
+            task.creationTimestamp == null
         ) {
             return
         }
@@ -37,7 +40,8 @@ class SingleTaskRepository {
                 time = task.time,
                 date = task.date,
                 notificationTime = task.notificationTime,
-                status = task.status.name
+                status = task.status.name,
+                creationTimestamp = task.creationTimestamp.toString()
             )
         )
     }

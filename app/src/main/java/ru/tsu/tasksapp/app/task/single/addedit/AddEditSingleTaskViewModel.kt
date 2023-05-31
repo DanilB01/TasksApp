@@ -51,10 +51,11 @@ class AddEditSingleTaskViewModel: ViewModel() {
 
     fun saveSingleTask() {
         viewModelScope.launch {
-            val task = _currentTask.value ?: return@launch
+            var task = _currentTask.value ?: return@launch
             if(isEditingTask) {
                 singleTaskRepository.updateSingleTask(task)
             } else {
+                task = task.copy(creationTimestamp = System.currentTimeMillis())
                 singleTaskRepository.addSingleTask(task)
             }
         }
