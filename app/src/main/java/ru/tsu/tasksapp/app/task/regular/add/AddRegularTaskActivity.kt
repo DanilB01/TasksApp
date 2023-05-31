@@ -43,6 +43,12 @@ class AddRegularTaskActivity:
         }
 
         regularTaskItemTime.setOnClickListener {
+            viewModel.setIsNotificationTimeSelecting(false)
+            PickUpTimeBottomSheetDialog().show(supportFragmentManager, "")
+        }
+
+        regularTaskItemNotification.setOnClickListener {
+            viewModel.setIsNotificationTimeSelecting(true)
             PickUpTimeBottomSheetDialog().show(supportFragmentManager, "")
         }
     }

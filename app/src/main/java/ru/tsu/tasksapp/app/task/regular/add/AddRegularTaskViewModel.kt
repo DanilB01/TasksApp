@@ -10,6 +10,8 @@ class AddRegularTaskViewModel: ViewModel() {
     private val _currentTask = MutableLiveData<RegularTask>()
     val currentTask: LiveData<RegularTask> = _currentTask
 
+    private var isNotificationTimeSelecting: Boolean? = null
+
     init {
         _currentTask.value = RegularTask()
     }
@@ -18,8 +20,19 @@ class AddRegularTaskViewModel: ViewModel() {
         _currentTask.value = _currentTask.value?.copy(name = name)
     }
 
+    fun setIsNotificationTimeSelecting(flag: Boolean) {
+        isNotificationTimeSelecting = flag
+    }
+
     fun setTime(time: String) {
-        _currentTask.value = _currentTask.value?.copy(time = time)
+        isNotificationTimeSelecting?.let {
+            if (it) {
+                _currentTask.value = _currentTask.value?.copy(notificationTime = time)
+            } else {
+                _currentTask.value = _currentTask.value?.copy(time = time)
+            }
+        }
+        isNotificationTimeSelecting = null
     }
 
     fun setPeriod(period: String) {

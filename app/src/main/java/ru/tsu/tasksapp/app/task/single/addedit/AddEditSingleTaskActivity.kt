@@ -39,7 +39,6 @@ class AddEditSingleTaskActivity :
         }
         intent.extras?.getBoolean("isAddSingleTask")?.let {
             addEditSingleTaskSubtitle.isVisible = !it
-            singleTaskItemMakeRegular.isVisible = it
             addEditSingleTaskTitle.text = if(it) {
                 "Новая разовая задача"
             } else {
