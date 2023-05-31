@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import ru.tsu.tasksapp.app.task.regular.add.ChooseNameRegularTaskActivity
 import ru.tsu.tasksapp.app.task.single.addedit.AddEditSingleTaskActivity
 import ru.tsu.tasksapp.databinding.BottomSheetChooseTaskTypeBinding
 
@@ -34,21 +35,18 @@ class ChooseTaskTypeBottomSheetDialog: BottomSheetDialogFragment() {
             dismiss()
         }
 
-        chooseTypeTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                chooseTypeButton.isEnabled = tab?.position == 0
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) = Unit
-            override fun onTabReselected(tab: TabLayout.Tab?) = Unit
-        })
-
         chooseTypeButton.setOnClickListener {
-            startActivity(
-                Intent(requireActivity(), AddEditSingleTaskActivity::class.java).apply {
-                    putExtra("isAddSingleTask", true)
-                }
-            )
+            if(chooseTypeTabLayout.selectedTabPosition == 0) {
+                startActivity(
+                    Intent(requireActivity(), AddEditSingleTaskActivity::class.java).apply {
+                        putExtra("isAddSingleTask", true)
+                    }
+                )
+            } else {
+                startActivity(
+                    Intent(requireActivity(), ChooseNameRegularTaskActivity::class.java)
+                )
+            }
             dismiss()
         }
     }

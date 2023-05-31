@@ -1,4 +1,4 @@
-package ru.tsu.tasksapp.app.task.single.addedit.dialog
+package ru.tsu.tasksapp.app.task.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater

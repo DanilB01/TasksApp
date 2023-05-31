@@ -8,10 +8,10 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
-import ru.tsu.tasksapp.app.task.single.addedit.dialog.DatePickerListener
-import ru.tsu.tasksapp.app.task.single.addedit.dialog.PickUpDateBottomSheetDialog
-import ru.tsu.tasksapp.app.task.single.addedit.dialog.PickUpTimeBottomSheetDialog
-import ru.tsu.tasksapp.app.task.single.addedit.dialog.TimePickerListener
+import ru.tsu.tasksapp.app.task.dialog.DatePickerListener
+import ru.tsu.tasksapp.app.task.dialog.PickUpDateBottomSheetDialog
+import ru.tsu.tasksapp.app.task.dialog.PickUpTimeBottomSheetDialog
+import ru.tsu.tasksapp.app.task.dialog.TimePickerListener
 import ru.tsu.tasksapp.databinding.ActivityAddEditSingleTaskBinding
 import ru.tsu.tasksapp.domain.task.single.SingleTask
 

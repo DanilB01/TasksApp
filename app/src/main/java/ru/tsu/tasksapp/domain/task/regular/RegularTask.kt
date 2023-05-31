@@ -1,12 +1,12 @@
-package ru.tsu.tasksapp.domain.task.single
+package ru.tsu.tasksapp.domain.task.regular
 
 import ru.tsu.tasksapp.domain.task.TaskStatus
 
-data class SingleTask(
+data class RegularTask(
     val id: Int? = null,
     val name: String? = null,
     val time: String? = null,
-    val date: String? = null,
+    val regularity: String? = null,
     val notificationTime: String? = null,
     val status: TaskStatus = TaskStatus.ACTIVE
 )

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".app.task.regular.add.AddRegularTaskActivity">
+
+    <TextView
+        android:id="@+id/addRegularTaskTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="22sp"
+        android:textColor="@color/text"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:text="Регулярная задача" />
+
+    <ImageView
+        android:id="@+id/addRegularTaskBackIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:src="@drawable/ic_chevrone_left"
+        app:layout_constraintBottom_toBottomOf="@+id/addRegularTaskTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/addRegularTaskTitle" />
+
+    <TextView
+        android:id="@+id/addRegularTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/shape_tab_active_background"
+        tools:text="Название задачи"
+        android:padding="16dp"
+        android:textColor="@color/text"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/addRegularTaskTitle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="32dp"
+        android:orientation="vertical"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/addRegularTaskName">
+
+        <LinearLayout
+            android:id="@+id/regularTaskItemTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/regularTaskTimeIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_clock" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Время выполнения"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:id="@+id/regularTaskDotTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:text="•"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:id="@+id/regularTaskTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="20:00"
+                android:textColor="@color/text" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/regularTaskItemNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/regularTaskNotificationIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_notification" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Напоминание"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:id="@+id/regularTaskDotNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:text="•"
+                android:textColor="@color/text" />
+
+            <TextView
+                android:id="@+id/regularTaskNotificationTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="17:00"
+                android:textColor="@color/text" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/regularTaskItemRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/regularTaskRegularityIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_swap" />
+
+            <TextView
+                android:id="@+id/regularTaskRegularityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Регулярность"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/text" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addRegularTaskSaveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/accent"
+        android:paddingVertical="12dp"
+        android:text="Сохранить"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:cornerRadius="6dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

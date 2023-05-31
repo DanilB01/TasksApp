@@ -13,4 +13,12 @@
     <color name="textLight">#8A8585</color>
     <color name="divider">#D4CDCC</color>
     <color name="tab_background">#F2F3F5</color>
+
+    <color name="category_body">#B6D8F2</color>
+    <color name="category_home">#75C4AD</color>
+    <color name="category_pet">#E5B3BB</color>
+    <color name="category_health">#FFD888</color>
+    <color name="category_education">#E6A57E</color>
+
+    <color name="alpha_50">#80FFFFFF</color>
 </resources>
