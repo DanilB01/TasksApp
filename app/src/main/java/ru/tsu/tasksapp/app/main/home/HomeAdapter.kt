@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.main.TaskItemAdapter
+import ru.tsu.tasksapp.app.main.TaskItemListener
 import ru.tsu.tasksapp.databinding.ItemHomeBinding
 
-class HomeAdapter: RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter(
+    private val listener: TaskItemListener
+): RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     private var items: List<HomeItem> = emptyList()
 
@@ -19,7 +22,7 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     inner class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding: ItemHomeBinding by lazy { ItemHomeBinding.bind(view) }
-        private val adapter: TaskItemAdapter by lazy { TaskItemAdapter() }
+        private val adapter: TaskItemAdapter by lazy { TaskItemAdapter(listener) }
 
         init {
             binding.itemHomeRecycler.adapter = adapter

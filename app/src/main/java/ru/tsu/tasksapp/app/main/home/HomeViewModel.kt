@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.domain.common.TaskInfo
+import ru.tsu.tasksapp.domain.task.Task
 import ru.tsu.tasksapp.domain.task.TaskStatus
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
 import ru.tsu.tasksapp.domain.task.regular.RegularTaskRepository
@@ -21,6 +22,16 @@ class HomeViewModel: ViewModel() {
 
     private val _homeItems = MutableLiveData<List<HomeItem>>()
     val homeItems: LiveData<List<HomeItem>> = _homeItems
+
+    fun updateTask(task: Task) {
+        viewModelScope.launch {
+            when (task) {
+                is SingleTask -> singleTaskRepository.markTaskDone(task)
+                is RegularTask -> regularTaskRepository.markTaskDone(task)
+            }
+        }
+        updateHomeItems()
+    }
 
     fun updateHomeItems() {
         viewModelScope.launch {

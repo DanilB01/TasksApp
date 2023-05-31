@@ -8,12 +8,14 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.app.main.TaskItemAdapter
+import ru.tsu.tasksapp.app.main.TaskItemListener
 import ru.tsu.tasksapp.databinding.FragmentCalendarBinding
+import ru.tsu.tasksapp.domain.task.Task
 
-class CalendarFragment : Fragment(R.layout.fragment_calendar) {
+class CalendarFragment : Fragment(R.layout.fragment_calendar), TaskItemListener {
     private val viewBinding: FragmentCalendarBinding by viewBinding()
     private val viewModel: CalendarViewModel by viewModels()
-    private val adapter: TaskItemAdapter by lazy { TaskItemAdapter() }
+    private val adapter: TaskItemAdapter by lazy { TaskItemAdapter(this) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,5 +31,13 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         viewModel.tasks.observe(viewLifecycleOwner) {
             adapter.update(it)
         }
+    }
+
+    override fun onTaskDone(task: Task) {
+        viewModel.updateTask(task)
+    }
+
+    override fun onTaskClicked(task: Task) {
+        //TODO("Not yet implemented")
     }
 }

@@ -9,6 +9,7 @@ import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.app.main.home.HomeItem
 import ru.tsu.tasksapp.domain.common.TaskInfo
+import ru.tsu.tasksapp.domain.task.Task
 import ru.tsu.tasksapp.domain.task.TaskStatus
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
 import ru.tsu.tasksapp.domain.task.regular.RegularTaskRepository
@@ -23,7 +24,19 @@ class CalendarViewModel: ViewModel() {
     private val _tasks = MutableLiveData<List<TaskInfo>>()
     val tasks: LiveData<List<TaskInfo>> = _tasks
 
+    private var currentTimestamp: Long = 0
+    fun updateTask(task: Task) {
+        viewModelScope.launch {
+            when (task) {
+                is SingleTask -> singleTaskRepository.markTaskDone(task)
+                is RegularTask -> regularTaskRepository.markTaskDone(task)
+            }
+        }
+        updateTasks(currentTimestamp)
+    }
+
     fun updateTasks(timestamp: Long) {
+        currentTimestamp = timestamp
         viewModelScope.launch {
             val singleTasks = singleTaskRepository.getTasks()
             val regularTasks = regularTaskRepository.getTasks()

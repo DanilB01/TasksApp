@@ -15,4 +15,7 @@ interface RegularTaskDao {
 
     @Update
     suspend fun updateRegularTask(task: RegularTaskEntity)
+
+    @Query("UPDATE regular_tasks SET status = :status WHERE id = :id")
+    suspend fun markTaskDone(id: Int, status: String)
 }

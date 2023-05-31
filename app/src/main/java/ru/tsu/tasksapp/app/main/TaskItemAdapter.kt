@@ -9,9 +9,13 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.databinding.ItemHomeTaskBinding
 import ru.tsu.tasksapp.domain.common.TaskInfo
+import ru.tsu.tasksapp.domain.task.Task
+import ru.tsu.tasksapp.domain.task.TaskStatus
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
 
-class TaskItemAdapter : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>() {
+class TaskItemAdapter(
+    private val listener: TaskItemListener
+) : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>() {
 
     private var items: List<TaskInfo> = emptyList()
 
@@ -32,6 +36,25 @@ class TaskItemAdapter : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>
             (item.task as? RegularTask)?.let {
                 itemHoneTaskRegularityText.text = it.regularity
             }
+
+            if(item.status == TaskStatus.DONE) {
+                itemHomeTaskCheckbox.isChecked = true
+                itemHomeTaskCheckbox.isEnabled = false
+                itemHomeTaskDateText.setTextColor(root.context.resources.getColor(R.color.textLight))
+                itemHomeTaskCheckbox.setTextColor(root.context.resources.getColor(R.color.textLight))
+                itemHoneTaskRegularityText.setTextColor(root.context.resources.getColor(R.color.textLight))
+                itemHomeTaskEditIcon.setColorFilter(root.context.resources.getColor(R.color.textLight))
+            }
+
+            binding.itemHomeTaskDateText.setOnClickListener {
+                listener.onTaskClicked(item.task)
+            }
+
+            binding.itemHomeTaskCheckbox.setOnCheckedChangeListener { compoundButton, isChecked ->
+                if(isChecked) {
+                    listener.onTaskDone(item.task)
+                }
+            }
         }
     }
 
@@ -46,4 +69,9 @@ class TaskItemAdapter : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>
     }
 
     override fun getItemCount(): Int = items.size
+}
+
+interface TaskItemListener{
+    fun onTaskDone(task: Task)
+    fun onTaskClicked(task: Task)
 }

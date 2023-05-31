@@ -15,4 +15,7 @@ interface SingleTaskDao {
 
     @Update
     suspend fun updateSingleTask(task: SingleTaskEntity)
+
+    @Query("UPDATE single_tasks SET status = :status WHERE id = :id")
+    suspend fun markTaskDone(id: Int, status: String)
 }

@@ -52,6 +52,7 @@ class SingleTaskRepository {
         }
         Database.getSingleTaskDao().updateSingleTask(
             SingleTaskEntity(
+                id = task.id,
                 name = task.name,
                 time = task.time,
                 date = task.date,
@@ -59,6 +60,13 @@ class SingleTaskRepository {
                 status = task.status.name,
                 dateTimestamp = task.dateTimestamp.toString()
             )
+        )
+    }
+
+    suspend fun markTaskDone(task: SingleTask) {
+        Database.getSingleTaskDao().markTaskDone(
+            id = task.id,
+            status = TaskStatus.DONE.name
         )
     }
 }
