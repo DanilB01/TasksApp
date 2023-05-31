@@ -21,4 +21,8 @@ class AddRegularTaskViewModel: ViewModel() {
     fun setTime(time: String) {
         _currentTask.value = _currentTask.value?.copy(time = time)
     }
+
+    fun setPeriod(period: String) {
+        _currentTask.value = _currentTask.value?.copy(regularity = period)
+    }
 }

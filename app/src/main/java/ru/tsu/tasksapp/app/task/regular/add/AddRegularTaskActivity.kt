@@ -7,6 +7,8 @@ import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
+import ru.tsu.tasksapp.app.task.dialog.PeriodPickerListener
+import ru.tsu.tasksapp.app.task.dialog.PickUpPeriodBottomSheetDialog
 import ru.tsu.tasksapp.app.task.dialog.PickUpTimeBottomSheetDialog
 import ru.tsu.tasksapp.app.task.dialog.TimePickerListener
 import ru.tsu.tasksapp.databinding.ActivityAddRegularTaskBinding
@@ -15,7 +17,8 @@ import ru.tsu.tasksapp.domain.task.single.SingleTask
 
 class AddRegularTaskActivity:
     AppCompatActivity(R.layout.activity_add_regular_task),
-    TimePickerListener {
+    TimePickerListener,
+    PeriodPickerListener {
 
     private val viewBinding: ActivityAddRegularTaskBinding by viewBinding()
     private val viewModel: AddRegularTaskViewModel by viewModels()
@@ -35,6 +38,10 @@ class AddRegularTaskActivity:
             finish()
         }
 
+        regularTaskItemRegular.setOnClickListener {
+            PickUpPeriodBottomSheetDialog().show(supportFragmentManager, "")
+        }
+
         regularTaskItemTime.setOnClickListener {
             PickUpTimeBottomSheetDialog().show(supportFragmentManager, "")
         }
@@ -50,7 +57,6 @@ class AddRegularTaskActivity:
         addRegularTaskName.text = task.name
         regularTaskTime.text = task.time
         regularTaskNotificationTime.text = task.notificationTime
-        regularTaskRegularityText.text = task.regularity
 
         regularTaskDotTime.isVisible = task.time != null
         regularTaskDotNotification.isVisible = task.notificationTime != null
@@ -63,8 +69,10 @@ class AddRegularTaskActivity:
 
         if(task.regularity != null) {
             regularTaskRegularityIcon.imageTintList = ColorStateList.valueOf(getColor(R.color.accent))
+            regularTaskRegularityText.text = task.regularity
         } else {
             regularTaskRegularityIcon.clearColorFilter()
+            regularTaskRegularityText.text = "Регулярность"
         }
 
         if(task.notificationTime != null) {
@@ -81,5 +89,9 @@ class AddRegularTaskActivity:
 
     override fun getTime(time: String) {
         viewModel.setTime(time)
+    }
+
+    override fun setPeriod(period: String) {
+        viewModel.setPeriod(period)
     }
 }

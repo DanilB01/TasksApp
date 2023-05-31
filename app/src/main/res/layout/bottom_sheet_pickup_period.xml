@@ -7,7 +7,7 @@
     android:paddingBottom="16dp">
 
     <ImageView
-        android:id="@+id/pickupTimeCloseImage"
+        android:id="@+id/pickupPeriodCloseImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -16,11 +16,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/pickupTimeTitle"
+        android:id="@+id/pickupPeriodTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Выберите время"
+        android:text="Выберите период"
         android:textColor="@color/text"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -29,67 +29,44 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/pickupTimeDivider"
+        android:id="@+id/pickupPeriodDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="16dp"
         android:background="@color/divider"
-        app:layout_constraintTop_toBottomOf="@id/pickupTimeTitle" />
+        app:layout_constraintTop_toBottomOf="@id/pickupPeriodTitle" />
 
     <EditText
-        android:id="@+id/pickupTimeHours"
+        android:id="@+id/pickupPeriodEditText"
         android:layout_width="76dp"
         android:layout_height="63dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_time_picker"
-        android:hint="00"
+        android:background="@android:color/transparent"
+        android:hint="1"
         android:inputType="number"
         android:maxLength="2"
         android:textAlignment="center"
+        android:textColor="@color/accent"
         android:textColorHint="@color/accent"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="@color/accent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/pickupPeriodPicker"
+        app:layout_constraintEnd_toStartOf="@+id/pickupPeriodPicker"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pickupTimeDivider" />
+        app:layout_constraintTop_toTopOf="@+id/pickupPeriodPicker" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <NumberPicker
+        android:id="@+id/pickupPeriodPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/image_text_divider"
-        app:layout_constraintBottom_toBottomOf="@+id/pickupTimeHours"
-        app:layout_constraintEnd_toStartOf="@+id/pickupTimeMinutes"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/pickupTimeHours"
-        app:layout_constraintTop_toTopOf="@+id/pickupTimeHours" />
-
-    <EditText
-        android:id="@+id/pickupTimeMinutes"
-        android:layout_width="76dp"
-        android:layout_height="63dp"
-        android:background="@drawable/selector_time_picker"
-        android:hint="00"
-        android:inputType="number"
-        android:maxLength="2"
-        android:textAlignment="center"
-        android:textColorHint="@color/accent"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        android:textColor="@color/accent"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        android:layout_marginTop="16dp"
+        android:theme="@style/AppTheme.Picker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/pickupPeriodEditText"
+        app:layout_constraintTop_toBottomOf="@+id/pickupPeriodDivider" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/pickupTimeButton"
+        android:id="@+id/pickupPeriodButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -100,6 +77,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:cornerRadius="6dp"
-        app:layout_constraintTop_toBottomOf="@+id/pickupTimeHours" />
+        app:layout_constraintTop_toBottomOf="@+id/pickupPeriodPicker"
+        tools:layout_editor_absoluteX="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
