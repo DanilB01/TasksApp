@@ -9,7 +9,7 @@ class SingleTaskRepository {
             task.time == null ||
             task.date == null ||
             task.notificationTime == null ||
-            task.creationTimestamp == null
+            task.dateTimestamp == null
         ) {
             return
         }
@@ -20,7 +20,7 @@ class SingleTaskRepository {
                 date = task.date,
                 notificationTime = task.notificationTime,
                 status = task.status.name,
-                creationTimestamp = task.creationTimestamp.toString()
+                dateTimestamp = task.dateTimestamp.toString()
             )
         )
     }
@@ -30,7 +30,7 @@ class SingleTaskRepository {
             task.time == null ||
             task.date == null ||
             task.notificationTime == null ||
-            task.creationTimestamp == null
+            task.dateTimestamp == null
         ) {
             return
         }
@@ -41,7 +41,7 @@ class SingleTaskRepository {
                 date = task.date,
                 notificationTime = task.notificationTime,
                 status = task.status.name,
-                creationTimestamp = task.creationTimestamp.toString()
+                dateTimestamp = task.dateTimestamp.toString()
             )
         )
     }

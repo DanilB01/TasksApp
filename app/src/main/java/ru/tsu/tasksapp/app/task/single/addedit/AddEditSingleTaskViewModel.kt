@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.tsu.tasksapp.domain.task.single.SingleTask
 import ru.tsu.tasksapp.domain.task.single.SingleTaskRepository
+import java.text.DateFormat
 
 class AddEditSingleTaskViewModel: ViewModel() {
     private val singleTaskRepository = SingleTaskRepository()
@@ -41,8 +42,12 @@ class AddEditSingleTaskViewModel: ViewModel() {
         isNotificationTimeSelecting = null
     }
 
-    fun setDate(date: String) {
-        _currentTask.value = _currentTask.value?.copy(date = date)
+    fun setDate(dateTimestamp: Long) {
+        val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
+        _currentTask.value = _currentTask.value?.copy(
+            dateTimestamp = dateTimestamp,
+            date = dateFormatter.format(dateTimestamp)
+        )
     }
 
     fun updateTaskName(name: String) {
@@ -51,11 +56,10 @@ class AddEditSingleTaskViewModel: ViewModel() {
 
     fun saveSingleTask() {
         viewModelScope.launch {
-            var task = _currentTask.value ?: return@launch
+            val task = _currentTask.value ?: return@launch
             if(isEditingTask) {
                 singleTaskRepository.updateSingleTask(task)
             } else {
-                task = task.copy(creationTimestamp = System.currentTimeMillis())
                 singleTaskRepository.addSingleTask(task)
             }
         }

@@ -4,7 +4,7 @@ import ru.tsu.tasksapp.domain.task.TaskStatus
 
 data class SingleTask(
     val id: Int? = null,
-    val creationTimestamp: Long? = null,
+    val dateTimestamp: Long? = null,
     val name: String? = null,
     val time: String? = null,
     val date: String? = null,

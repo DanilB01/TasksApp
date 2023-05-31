@@ -113,7 +113,7 @@ class AddEditSingleTaskActivity :
         viewModel.setTime(time)
     }
 
-    override fun getDate(date: String) {
-        viewModel.setDate(date)
+    override fun getDate(dateTimestamp: Long) {
+        viewModel.setDate(dateTimestamp)
     }
 }

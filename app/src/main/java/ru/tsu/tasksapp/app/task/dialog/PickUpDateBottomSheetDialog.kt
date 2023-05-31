@@ -11,7 +11,6 @@ import java.util.Calendar
 
 class PickUpDateBottomSheetDialog: BottomSheetDialogFragment() {
     private lateinit var viewBinding: BottomSheetPickupDateBinding
-    private val calendar: Calendar by lazy { Calendar.getInstance() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,14 +32,12 @@ class PickUpDateBottomSheetDialog: BottomSheetDialogFragment() {
         }
 
         pickupDateButton.setOnClickListener {
-            calendar.timeInMillis = pickupDateCalendarView.date
-            val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
-            (requireActivity() as DatePickerListener).getDate(dateFormatter.format(calendar.time))
+            (requireActivity() as DatePickerListener).getDate(pickupDateCalendarView.date)
             dismiss()
         }
     }
 }
 
 fun interface DatePickerListener {
-    fun getDate(date: String)
+    fun getDate(dateTimestamp: Long)
 }

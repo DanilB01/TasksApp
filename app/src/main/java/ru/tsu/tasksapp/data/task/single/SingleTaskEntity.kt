@@ -12,5 +12,5 @@ data class SingleTaskEntity(
     val date: String,
     val notificationTime: String,
     val status: String,
-    val creationTimestamp: String
+    val dateTimestamp: String
 )
