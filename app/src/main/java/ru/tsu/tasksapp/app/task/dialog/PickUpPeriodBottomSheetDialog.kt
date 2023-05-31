@@ -49,7 +49,7 @@ class PickUpPeriodBottomSheetDialog: BottomSheetDialogFragment() {
             }
             (requireActivity() as PeriodPickerListener).setPeriod(
                 periodValue = periodValue,
-                periodVariant = TaskPeriod.values()[periodValue],
+                periodVariant = TaskPeriod.values()[pickupPeriodPicker.value],
                 periodString = "Каждые $periodValue ${periodVariants[pickupPeriodPicker.value]}"
             )
             dismiss()

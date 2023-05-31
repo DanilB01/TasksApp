@@ -111,8 +111,14 @@ class HomeViewModel: ViewModel() {
                 )
             }
 
-    private fun getTodayRegularTasks(tasks: List<RegularTask>): List<TaskInfo> =
-        tasks
+    private fun getTodayRegularTasks(tasks: List<RegularTask>): List<TaskInfo> {
+        tasks.forEach {
+            val current = System.currentTimeMillis()
+            val timestamp = getNextTimestamp(it)
+            val flag1 = DateTimeUtils.atStartOfDay(getNextTimestamp(it)!!)
+            val flag2 = DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!)
+        }
+        return tasks
             .filter {
                 System.currentTimeMillis() > DateTimeUtils.atStartOfDay(getNextTimestamp(it)!!) &&
                         System.currentTimeMillis() < DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!) &&
@@ -126,6 +132,7 @@ class HomeViewModel: ViewModel() {
                     task = it
                 )
             }
+    }
 
     private fun getOverdueRegularTasks(tasks: List<RegularTask>): List<TaskInfo> =
         tasks
