@@ -33,8 +33,8 @@
         android:id="@+id/mainFragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/mainBottomNav"
-        app:layout_constraintTop_toTopOf="@id/mainTitle" />
+        app:layout_constraintBottom_toTopOf="@id/mainBottomNav"
+        app:layout_constraintTop_toBottomOf="@id/mainTitle" />
 
     <ImageView
         android:id="@+id/addTasksFloatingButton"

@@ -1,12 +1,16 @@
 package ru.tsu.tasksapp.app.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
-import ru.tsu.tasksapp.databinding.ActivityMainBinding
+import ru.tsu.tasksapp.app.main.home.HomeFragment
 import ru.tsu.tasksapp.app.menu.MenuActivity
+import ru.tsu.tasksapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
@@ -27,15 +31,38 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
 
         mainBottomNav.setOnItemSelectedListener {
-            mainTitle.text = when (it.itemId) {
-                R.id.item_main_home -> "Главная"
-                R.id.item_main_calendar -> "Календарь"
-                R.id.item_main_tasks -> "Регулярные задачи"
-                else -> ""
+            when (it.itemId) {
+                R.id.item_main_home -> {
+                    mainTitle.text = "Главная"
+                    replaceFragment(HomeFragment())
+                }
+                R.id.item_main_calendar -> {
+                    mainTitle.text = "Календарь"
+                    hideFragments()
+                }
+                R.id.item_main_tasks -> {
+                    mainTitle.text = "Регулярные задачи"
+                    hideFragments()
+                }
             }
             true
         }
 
         mainBottomNav.selectedItemId = R.id.item_main_home
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        viewBinding.mainFragmentContainer.isVisible = true
+        supportFragmentManager
+            .commit {
+                replace(
+                    viewBinding.mainFragmentContainer.id,
+                    fragment
+                )
+            }
+    }
+
+    private fun hideFragments() {
+        viewBinding.mainFragmentContainer.isVisible = false
     }
 }

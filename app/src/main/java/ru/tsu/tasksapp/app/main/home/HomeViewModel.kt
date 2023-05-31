@@ -22,7 +22,7 @@ class HomeViewModel: ViewModel() {
     private val _homeItems = MutableLiveData<List<HomeItem>>()
     val homeItems: LiveData<List<HomeItem>> = _homeItems
 
-    fun getHomeItems() {
+    fun updateHomeItems() {
         viewModelScope.launch {
             val singleTasks = singleTaskRepository.getTasks()
             val regularTasks = regularTaskRepository.getTasks()
@@ -72,7 +72,7 @@ class HomeViewModel: ViewModel() {
     private fun getOverdueSingleTasks(tasks: List<SingleTask>): List<TaskInfo> =
         tasks
             .filter {
-                it.dateTimestamp!! < System.currentTimeMillis() &&
+                System.currentTimeMillis() > DateTimeUtils.atEndOfDay(it.dateTimestamp!!) &&
                 it.status == TaskStatus.ACTIVE
             }
             .map {
@@ -119,7 +119,7 @@ class HomeViewModel: ViewModel() {
     private fun getOverdueRegularTasks(tasks: List<RegularTask>): List<TaskInfo> =
         tasks
             .filter {
-                getNextTimestamp(it)!! < System.currentTimeMillis() &&
+                System.currentTimeMillis() > DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!) &&
                         it.status == TaskStatus.ACTIVE
             }
             .map {
