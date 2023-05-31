@@ -21,8 +21,9 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         viewBinding.calendarTasksRecycler.adapter = adapter
 
         viewBinding.calendarView.setOnDateChangeListener { calendarView, year, month, dayOfMonth ->
-            viewModel.updateTasks(calendarView.date)
-            viewBinding.calendarDateText.text = DateTimeUtils.getDateString(calendarView.date)
+            val timestamp = DateTimeUtils.getTimestamp(year, month, dayOfMonth)
+            viewModel.updateTasks(timestamp)
+            viewBinding.calendarDateText.text = DateTimeUtils.getDateString(timestamp)
         }
 
         viewModel.tasks.observe(viewLifecycleOwner) {

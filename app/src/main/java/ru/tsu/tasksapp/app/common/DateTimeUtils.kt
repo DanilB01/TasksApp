@@ -44,4 +44,14 @@ object DateTimeUtils {
     }
 
     fun getDateString(timestamp: Long): String = dateFormatter.format(timestamp)
+
+    fun getTimestamp(
+        year: Int, month: Int, dayOfMonth: Int
+    ): Long {
+        val newCalendar = Calendar.getInstance()
+        newCalendar[Calendar.YEAR] = year
+        newCalendar[Calendar.MONTH] = month
+        newCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
+        return newCalendar.timeInMillis
+    }
 }
