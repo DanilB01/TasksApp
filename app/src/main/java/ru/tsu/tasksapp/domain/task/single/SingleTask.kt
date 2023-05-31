@@ -1,5 +1,6 @@
 package ru.tsu.tasksapp.domain.task.single
 
+import ru.tsu.tasksapp.domain.task.Task
 import ru.tsu.tasksapp.domain.task.TaskStatus
 
 data class SingleTask(
@@ -10,4 +11,4 @@ data class SingleTask(
     val date: String? = null,
     val notificationTime: String? = null,
     val status: TaskStatus = TaskStatus.ACTIVE
-)
+): Task

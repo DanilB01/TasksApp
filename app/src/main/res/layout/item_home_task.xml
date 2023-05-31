@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingHorizontal="16dp">
+    android:paddingHorizontal="16dp"
+    android:paddingBottom="4dp">
 
     <CheckBox
         android:id="@+id/itemHomeTaskCheckbox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:textColor="@color/text"
+        app:layout_constraintEnd_toStartOf="@+id/itemHomeTaskDateText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Помыть посуду" />
 
     <TextView
@@ -21,12 +25,39 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:textColor="@color/text"
+        app:layout_constraintBottom_toBottomOf="@+id/itemHomeTaskEditIcon"
+        app:layout_constraintEnd_toStartOf="@+id/itemHomeTaskEditIcon"
+        app:layout_constraintTop_toTopOf="@+id/itemHomeTaskEditIcon"
         tools:text="25.05.2023" />
 
     <ImageView
         android:id="@+id/itemHomeTaskEditIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit_task" />
+        android:src="@drawable/ic_edit_task"
+        app:layout_constraintBottom_toBottomOf="@+id/itemHomeTaskCheckbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/itemHomeTaskCheckbox" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/itemHomeRegularTaskIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/itemHoneTaskRegularityText"
+        app:layout_constraintEnd_toStartOf="@+id/itemHoneTaskRegularityText"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/itemHomeTaskCheckbox"
+        app:layout_constraintTop_toTopOf="@+id/itemHoneTaskRegularityText"
+        app:srcCompat="@drawable/ic_swap" />
+
+    <TextView
+        android:id="@+id/itemHoneTaskRegularityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text"
+        tools:text="Каждый день"
+        app:layout_constraintEnd_toEndOf="@+id/itemHomeTaskCheckbox"
+        app:layout_constraintStart_toEndOf="@+id/itemHomeRegularTaskIcon"
+        app:layout_constraintTop_toBottomOf="@+id/itemHomeTaskCheckbox" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

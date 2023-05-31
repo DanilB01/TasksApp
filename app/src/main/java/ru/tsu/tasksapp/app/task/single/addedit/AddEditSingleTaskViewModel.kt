@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.domain.task.single.SingleTask
 import ru.tsu.tasksapp.domain.task.single.SingleTaskRepository
 import java.text.DateFormat
@@ -43,10 +44,9 @@ class AddEditSingleTaskViewModel: ViewModel() {
     }
 
     fun setDate(dateTimestamp: Long) {
-        val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
         _currentTask.value = _currentTask.value?.copy(
             dateTimestamp = dateTimestamp,
-            date = dateFormatter.format(dateTimestamp)
+            date = DateTimeUtils.getDateString(dateTimestamp)
         )
     }
 

@@ -1,5 +1,6 @@
 package ru.tsu.tasksapp.domain.task.regular
 
+import ru.tsu.tasksapp.domain.task.Task
 import ru.tsu.tasksapp.domain.task.TaskStatus
 
 data class RegularTask(
@@ -12,4 +13,4 @@ data class RegularTask(
     val regularity: String? = null,
     val notificationTime: String? = null,
     val status: TaskStatus = TaskStatus.ACTIVE
-)
+) : Task

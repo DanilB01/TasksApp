@@ -1,9 +1,11 @@
 package ru.tsu.tasksapp.app.common
 
+import java.text.DateFormat
 import java.util.*
 
 object DateTimeUtils {
     private val calendar by lazy { Calendar.getInstance() }
+    private val dateFormatter = DateFormat.getDateInstance(DateFormat.MEDIUM)
 
     fun atEndOfDay(timestamp: Long): Long {
         calendar.timeInMillis = timestamp
@@ -40,4 +42,6 @@ object DateTimeUtils {
         calendar.add(Calendar.MONTH, period)
         return calendar.timeInMillis
     }
+
+    fun getDateString(timestamp: Long) = dateFormatter.format(timestamp)
 }

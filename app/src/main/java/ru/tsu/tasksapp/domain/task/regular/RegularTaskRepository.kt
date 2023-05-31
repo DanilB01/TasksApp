@@ -2,8 +2,26 @@ package ru.tsu.tasksapp.domain.task.regular
 
 import ru.tsu.tasksapp.data.common.Database
 import ru.tsu.tasksapp.data.task.regular.RegularTaskEntity
+import ru.tsu.tasksapp.domain.task.TaskStatus
 
 class RegularTaskRepository {
+
+    suspend fun getTasks(): List<RegularTask> {
+        val entities = Database.getRegularTaskDao().getRegularTasks() ?: return emptyList()
+        return entities.map {
+            RegularTask(
+                id = it.id,
+                creationTimestamp = it.creationTimestamp.toLong(),
+                name = it.name,
+                time = it.time,
+                periodValue = it.periodValue,
+                periodVariant = TaskPeriod.valueOf(it.periodVariant),
+                regularity = it.regularity,
+                notificationTime = it.notificationTime,
+                status = TaskStatus.valueOf(it.status)
+            )
+        }
+    }
     suspend fun addTask(task: RegularTask) {
         if (task.name == null ||
             task.time == null ||
