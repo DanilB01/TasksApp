@@ -7,6 +7,7 @@
     <color name="accent_light">#F1E9E8</color>
     <color name="accent_yellow">#FFD888</color>
     <color name="accent_yellow_light">#F0CC84</color>
+    <color name="accent_green">#75C4AD</color>
 
     <color name="text">#1A1A1A</color>
     <color name="textLight">#8A8585</color>

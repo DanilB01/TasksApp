@@ -17,7 +17,8 @@ class SingleTaskRepository {
                 name = task.name,
                 time = task.time,
                 date = task.date,
-                notificationTime = task.notificationTime
+                notificationTime = task.notificationTime,
+                status = task.status.name
             )
         )
     }
@@ -35,7 +36,8 @@ class SingleTaskRepository {
                 name = task.name,
                 time = task.time,
                 date = task.date,
-                notificationTime = task.notificationTime
+                notificationTime = task.notificationTime,
+                status = task.status.name
             )
         )
     }

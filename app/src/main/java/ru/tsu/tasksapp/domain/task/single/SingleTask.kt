@@ -5,5 +5,6 @@ data class SingleTask(
     val name: String? = null,
     val time: String? = null,
     val date: String? = null,
-    val notificationTime: String? = null
+    val notificationTime: String? = null,
+    val status: SingleTaskStatus = SingleTaskStatus.ACTIVE
 )
