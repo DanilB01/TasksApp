@@ -43,5 +43,5 @@ object DateTimeUtils {
         return calendar.timeInMillis
     }
 
-    fun getDateString(timestamp: Long) = dateFormatter.format(timestamp)
+    fun getDateString(timestamp: Long): String = dateFormatter.format(timestamp)
 }

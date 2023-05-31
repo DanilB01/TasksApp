@@ -1,4 +1,4 @@
-package ru.tsu.tasksapp.app.main.home
+package ru.tsu.tasksapp.app.main
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,7 @@ import ru.tsu.tasksapp.databinding.ItemHomeTaskBinding
 import ru.tsu.tasksapp.domain.common.TaskInfo
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
 
-class HomeTaskItemAdapter : RecyclerView.Adapter<HomeTaskItemAdapter.HomeTaskItemViewHolder>() {
+class TaskItemAdapter : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>() {
 
     private var items: List<TaskInfo> = emptyList()
 
@@ -20,7 +20,7 @@ class HomeTaskItemAdapter : RecyclerView.Adapter<HomeTaskItemAdapter.HomeTaskIte
         notifyDataSetChanged()
     }
 
-    inner class HomeTaskItemViewHolder(view: View) : ViewHolder(view) {
+    inner class TaskItemViewHolder(view: View) : ViewHolder(view) {
         private val binding: ItemHomeTaskBinding by lazy { ItemHomeTaskBinding.bind(view) }
 
         fun bind(item: TaskInfo) = with(binding) {
@@ -35,13 +35,13 @@ class HomeTaskItemAdapter : RecyclerView.Adapter<HomeTaskItemAdapter.HomeTaskIte
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeTaskItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskItemViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_home_task, parent, false)
-        return HomeTaskItemViewHolder(view)
+        return TaskItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: HomeTaskItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TaskItemViewHolder, position: Int) {
         holder.bind(items[position])
     }
 

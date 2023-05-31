@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
+import ru.tsu.tasksapp.app.main.calendar.CalendarFragment
 import ru.tsu.tasksapp.app.main.home.HomeFragment
 import ru.tsu.tasksapp.app.menu.MenuActivity
 import ru.tsu.tasksapp.databinding.ActivityMainBinding
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
                 R.id.item_main_calendar -> {
                     mainTitle.text = "Календарь"
-                    hideFragments()
+                    replaceFragment(CalendarFragment())
                 }
                 R.id.item_main_tasks -> {
                     mainTitle.text = "Регулярные задачи"
@@ -52,7 +53,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun replaceFragment(fragment: Fragment) {
-        viewBinding.mainFragmentContainer.isVisible = true
         supportFragmentManager
             .commit {
                 replace(
@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                     fragment
                 )
             }
+        viewBinding.mainFragmentContainer.isVisible = true
     }
 
     private fun hideFragments() {

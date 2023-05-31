@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
+import ru.tsu.tasksapp.app.main.TaskItemAdapter
 import ru.tsu.tasksapp.databinding.ItemHomeBinding
 
 class HomeAdapter: RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
@@ -19,7 +19,7 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
 
     inner class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding: ItemHomeBinding by lazy { ItemHomeBinding.bind(view) }
-        private val adapter: HomeTaskItemAdapter by lazy { HomeTaskItemAdapter() }
+        private val adapter: TaskItemAdapter by lazy { TaskItemAdapter() }
 
         init {
             binding.itemHomeRecycler.adapter = adapter
