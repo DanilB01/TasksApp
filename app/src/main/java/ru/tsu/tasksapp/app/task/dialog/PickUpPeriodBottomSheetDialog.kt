@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.databinding.BottomSheetPickupPeriodBinding
+import ru.tsu.tasksapp.domain.task.regular.TaskPeriod
 
 class PickUpPeriodBottomSheetDialog: BottomSheetDialogFragment() {
     private lateinit var viewBinding: BottomSheetPickupPeriodBinding
@@ -42,12 +43,14 @@ class PickUpPeriodBottomSheetDialog: BottomSheetDialogFragment() {
         }
 
         pickupPeriodButton.setOnClickListener {
-            var periodValue = pickupPeriodEditText.text.toString()
-            if(periodValue.isEmpty()) {
-                periodValue = "1"
+            var periodValue = pickupPeriodEditText.text.toString().toIntOrNull()
+            if(periodValue == null) {
+                periodValue = 1
             }
             (requireActivity() as PeriodPickerListener).setPeriod(
-                "Каждые $periodValue ${periodVariants[pickupPeriodPicker.value]}"
+                periodValue = periodValue,
+                periodVariant = TaskPeriod.values()[periodValue],
+                periodString = "Каждые $periodValue ${periodVariants[pickupPeriodPicker.value]}"
             )
             dismiss()
         }
@@ -56,5 +59,9 @@ class PickUpPeriodBottomSheetDialog: BottomSheetDialogFragment() {
 }
 
 fun interface PeriodPickerListener {
-    fun setPeriod(period: String)
+    fun setPeriod(
+        periodValue: Int,
+        periodVariant: TaskPeriod,
+        periodString: String
+    )
 }

@@ -9,7 +9,9 @@ class RegularTaskRepository {
             task.time == null ||
             task.regularity == null ||
             task.notificationTime == null ||
-            task.creationTimestamp == null
+            task.creationTimestamp == null ||
+            task.periodValue == null ||
+            task.periodVariant == null
         ) {
             return
         }
@@ -17,6 +19,8 @@ class RegularTaskRepository {
             RegularTaskEntity(
                 name = task.name,
                 time = task.time,
+                periodValue = task.periodValue,
+                periodVariant = task.periodVariant.name,
                 regularity = task.regularity,
                 notificationTime = task.notificationTime,
                 status = task.status.name,

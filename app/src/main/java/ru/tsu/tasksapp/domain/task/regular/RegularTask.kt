@@ -7,6 +7,8 @@ data class RegularTask(
     val creationTimestamp: Long? = null,
     val name: String? = null,
     val time: String? = null,
+    val periodValue: Int? = null,
+    val periodVariant: TaskPeriod? = null,
     val regularity: String? = null,
     val notificationTime: String? = null,
     val status: TaskStatus = TaskStatus.ACTIVE

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
 import ru.tsu.tasksapp.domain.task.regular.RegularTaskRepository
+import ru.tsu.tasksapp.domain.task.regular.TaskPeriod
 
 class AddRegularTaskViewModel: ViewModel() {
     private val regularTaskRepository = RegularTaskRepository()
@@ -39,8 +40,12 @@ class AddRegularTaskViewModel: ViewModel() {
         isNotificationTimeSelecting = null
     }
 
-    fun setPeriod(period: String) {
-        _currentTask.value = _currentTask.value?.copy(regularity = period)
+    fun setPeriod(periodValue: Int, periodVariant: TaskPeriod, periodString: String) {
+        _currentTask.value = _currentTask.value?.copy(
+            periodValue = periodValue,
+            periodVariant = periodVariant,
+            regularity = periodString
+        )
     }
 
     fun saveTask() {

@@ -9,6 +9,8 @@ data class RegularTaskEntity(
     val id: Int = 0,
     val name: String,
     val time: String,
+    val periodValue: Int,
+    val periodVariant: String,
     val regularity: String,
     val notificationTime: String,
     val status: String,

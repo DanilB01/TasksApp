@@ -13,6 +13,7 @@ import ru.tsu.tasksapp.app.task.dialog.PickUpTimeBottomSheetDialog
 import ru.tsu.tasksapp.app.task.dialog.TimePickerListener
 import ru.tsu.tasksapp.databinding.ActivityAddRegularTaskBinding
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
+import ru.tsu.tasksapp.domain.task.regular.TaskPeriod
 import ru.tsu.tasksapp.domain.task.single.SingleTask
 
 class AddRegularTaskActivity:
@@ -102,7 +103,7 @@ class AddRegularTaskActivity:
         viewModel.setTime(time)
     }
 
-    override fun setPeriod(period: String) {
-        viewModel.setPeriod(period)
+    override fun setPeriod(periodValue: Int, periodVariant: TaskPeriod, periodString: String) {
+        viewModel.setPeriod(periodValue, periodVariant, periodString)
     }
 }
