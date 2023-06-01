@@ -30,6 +30,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
         viewModel.homeItems.observe(viewLifecycleOwner) {
             adapter.update(it)
         }
+
+        viewModel.isShowAddPhotoDialog.observe(viewLifecycleOwner) {
+            if (it) {
+                WishAddPhotoBottomSheetDialog().show(requireActivity().supportFragmentManager, "")
+                viewModel.resetShowAddPhotoDialogFlag()
+            }
+        }
     }
 
     override fun onResume() {

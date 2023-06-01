@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.domain.common.TaskInfo
+import ru.tsu.tasksapp.domain.session.SessionRepository
 import ru.tsu.tasksapp.domain.task.Task
 import ru.tsu.tasksapp.domain.task.TaskStatus
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
@@ -19,9 +20,17 @@ import ru.tsu.tasksapp.domain.task.single.SingleTaskRepository
 class HomeViewModel: ViewModel() {
     private val singleTaskRepository = SingleTaskRepository()
     private val regularTaskRepository = RegularTaskRepository()
+    private val sessionRepository = SessionRepository()
 
     private val _homeItems = MutableLiveData<List<HomeItem>>()
     val homeItems: LiveData<List<HomeItem>> = _homeItems
+
+    private val _isShowAddPhotoDialog = MutableLiveData<Boolean>()
+    val isShowAddPhotoDialog: LiveData<Boolean> = _isShowAddPhotoDialog
+
+    fun resetShowAddPhotoDialogFlag() {
+        _isShowAddPhotoDialog.value = false
+    }
 
     fun markTaskDone(task: Task) {
         viewModelScope.launch {
@@ -31,6 +40,7 @@ class HomeViewModel: ViewModel() {
                     task.copy(currentTaskDoneTimestamp = System.currentTimeMillis())
                 )
             }
+            _isShowAddPhotoDialog.value = sessionRepository.getEmailFromSession()?.isNotEmpty()
         }
         updateHomeItems()
     }
