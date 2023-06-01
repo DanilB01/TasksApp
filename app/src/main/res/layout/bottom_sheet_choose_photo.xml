@@ -68,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:paddingHorizontal="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/choosePhotoButton"
             app:layout_constraintTop_toBottomOf="@+id/choosePhotoFromDeviceButton"
             tools:listitem="@layout/item_photo" />
