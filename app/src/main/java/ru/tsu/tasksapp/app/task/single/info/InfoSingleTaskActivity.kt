@@ -7,12 +7,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
+import ru.tsu.tasksapp.app.photo.PhotoAdapter
+import ru.tsu.tasksapp.app.photo.PhotoItem
+import ru.tsu.tasksapp.app.photo.PhotoListener
+import ru.tsu.tasksapp.app.photo.WishAddPhotoBottomSheetDialog
 import ru.tsu.tasksapp.databinding.ActivityInfoSingleTaskBinding
 import ru.tsu.tasksapp.domain.task.TaskStatus
 
 class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_task) {
     private val viewBinding: ActivityInfoSingleTaskBinding by viewBinding()
     private val viewModel: InfoSingleTaskViewModel by viewModels()
+    private val adapter: PhotoAdapter by lazy {
+        PhotoAdapter(object : PhotoListener {
+            override fun removePhoto(photo: PhotoItem) {
+                //TODO("Not yet implemented")
+            }
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +31,8 @@ class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_t
         intent.extras?.getInt("taskId")?.let {
             viewModel.loadTaskInfo(it)
         }
+
+        viewBinding.photoSingleRecycler.adapter = adapter
 
         viewBinding.infoSingleTaskDoneButton.setOnClickListener {
             viewModel.setTaskDone()
@@ -49,6 +62,8 @@ class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_t
                 )
             )
             viewBinding.infoSingleTaskDoneButton.isVisible = it.status != TaskStatus.DONE
+            viewBinding.infoSinglePhotoCard.isVisible =
+                viewModel.isPhotosVisible.value == true && it.status == TaskStatus.DONE
         }
 
         viewModel.isOverdue.observe(this) {
@@ -60,6 +75,10 @@ class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_t
         viewModel.isPhotosVisible.observe(this) {
             viewBinding.infoSinglePhotoCard.isVisible = it &&
                     viewModel.currentTask.value?.status == TaskStatus.DONE
+        }
+
+        viewModel.photos.observe(this) {
+            adapter.update(it)
         }
     }
 }

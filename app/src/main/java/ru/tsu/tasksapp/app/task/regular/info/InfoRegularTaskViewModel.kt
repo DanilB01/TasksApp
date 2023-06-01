@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
+import ru.tsu.tasksapp.app.photo.PhotoItem
 import ru.tsu.tasksapp.domain.session.SessionRepository
 import ru.tsu.tasksapp.domain.task.TaskStatus
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
@@ -24,6 +26,9 @@ class InfoRegularTaskViewModel: ViewModel() {
     private val _isPhotosVisible = MutableLiveData<Boolean>()
     val isPhotosVisible: LiveData<Boolean> = _isPhotosVisible
 
+    private val _photos = MutableLiveData<List<PhotoItem>>()
+    val photos: LiveData<List<PhotoItem>> = _photos
+
     private var currentUserEmail: String? = null
         set(value) {
             _isPhotosVisible.value = value != null
@@ -39,6 +44,7 @@ class InfoRegularTaskViewModel: ViewModel() {
                     task.status == TaskStatus.ACTIVE
 
             currentUserEmail = sessionRepository.getEmailFromSession()
+            getPhotos()
         }
     }
 
@@ -70,4 +76,19 @@ class InfoRegularTaskViewModel: ViewModel() {
 
     private fun checkIfTaskActiveForToday(task: RegularTask) = task.currentTaskDoneTimestamp == null ||
             System.currentTimeMillis() > DateTimeUtils.atEndOfDay(task.currentTaskDoneTimestamp)
+
+    private fun getPhotos() {
+        // TODO: add getting photo from db
+        val res = mutableListOf<PhotoItem>()
+        repeat(5) {
+            res.add(
+                PhotoItem(
+                    drawable = R.drawable.pic_status_active,
+                    name = "image.png",
+                    size = "1.5 МБ"
+                )
+            )
+        }
+        _photos.value = res
+    }
 }

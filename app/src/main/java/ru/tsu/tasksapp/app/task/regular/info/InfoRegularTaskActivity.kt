@@ -6,12 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
+import ru.tsu.tasksapp.app.photo.PhotoAdapter
+import ru.tsu.tasksapp.app.photo.PhotoItem
+import ru.tsu.tasksapp.app.photo.PhotoListener
 import ru.tsu.tasksapp.databinding.ActivityInfoRegularTaskBinding
 import ru.tsu.tasksapp.domain.task.TaskStatus
 
 class InfoRegularTaskActivity : AppCompatActivity(R.layout.activity_info_regular_task) {
     private val viewBinding: ActivityInfoRegularTaskBinding by viewBinding()
     private val viewModel: InfoRegularTaskViewModel by viewModels()
+    private val adapter: PhotoAdapter by lazy {
+        PhotoAdapter(object : PhotoListener {
+            override fun removePhoto(photo: PhotoItem) {
+                //TODO("Not yet implemented")
+            }
+        })
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +29,8 @@ class InfoRegularTaskActivity : AppCompatActivity(R.layout.activity_info_regular
         intent.extras?.getInt("taskId")?.let {
             viewModel.loadTaskInfo(it)
         }
+
+        viewBinding.photoRegularRecycler.adapter = adapter
 
         viewBinding.infoRegularTaskBackIcon.setOnClickListener {
             finish()
@@ -53,6 +65,8 @@ class InfoRegularTaskActivity : AppCompatActivity(R.layout.activity_info_regular
         }
 
         isTaskActiveForToday.observe(this@InfoRegularTaskActivity) {
+            viewBinding.infoRegularPhotoCard.isVisible = !it &&
+                    viewModel.isPhotosVisible.value == true
             if(it) {
                 viewBinding.infoRegularTaskDoneForTodayButton.apply {
                     text = "Выполнить"
@@ -77,6 +91,10 @@ class InfoRegularTaskActivity : AppCompatActivity(R.layout.activity_info_regular
         isPhotosVisible.observe(this@InfoRegularTaskActivity) {
             viewBinding.infoRegularPhotoCard.isVisible = it &&
                     viewModel.isTaskActiveForToday.value == false
+        }
+
+        viewModel.photos.observe(this@InfoRegularTaskActivity) {
+            adapter.update(it)
         }
     }
 }

@@ -207,12 +207,14 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/infoRegularPhotoCard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:maxHeight="300dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:maxHeight="200dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/infoRegularTaskDoneButton"
         app:layout_constraintTop_toBottomOf="@+id/infoRegularTaskDoneForTodayButton"
         tools:layout_editor_absoluteX="16dp">
 
@@ -242,10 +244,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/photoRegularRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/photoCardDivider"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_photo" />
 
