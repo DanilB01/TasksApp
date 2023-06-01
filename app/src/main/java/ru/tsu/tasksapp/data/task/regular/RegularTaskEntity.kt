@@ -14,5 +14,6 @@ data class RegularTaskEntity(
     val regularity: String,
     val notificationTime: String,
     val status: String,
-    val creationTimestamp: String
+    val creationTimestamp: String,
+    val currentTaskDoneTimestamp: String,
 )

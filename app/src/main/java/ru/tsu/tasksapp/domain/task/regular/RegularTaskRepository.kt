@@ -12,6 +12,7 @@ class RegularTaskRepository {
             RegularTask(
                 id = it.id,
                 creationTimestamp = it.creationTimestamp.toLong(),
+                currentTaskDoneTimestamp = it.currentTaskDoneTimestamp.toLongOrNull(),
                 name = it.name,
                 time = it.time,
                 periodValue = it.periodValue,
@@ -42,7 +43,8 @@ class RegularTaskRepository {
                 regularity = task.regularity,
                 notificationTime = task.notificationTime,
                 status = task.status.name,
-                creationTimestamp = task.creationTimestamp.toString()
+                creationTimestamp = task.creationTimestamp.toString(),
+                currentTaskDoneTimestamp = task.currentTaskDoneTimestamp.toString()
             )
         )
     }
@@ -68,7 +70,8 @@ class RegularTaskRepository {
                 regularity = task.regularity,
                 notificationTime = task.notificationTime,
                 status = task.status.name,
-                creationTimestamp = task.creationTimestamp.toString()
+                creationTimestamp = task.creationTimestamp.toString(),
+                currentTaskDoneTimestamp = task.currentTaskDoneTimestamp.toString()
             )
         )
     }
@@ -77,6 +80,12 @@ class RegularTaskRepository {
         Database.getRegularTaskDao().markTaskDone(
             id = task.id,
             status = TaskStatus.DONE.name
+        )
+    }
+
+    suspend fun setCurrentTaskDoneTimestamp(task: RegularTask) {
+        Database.getRegularTaskDao().setCurrentDoneDate(
+            task.id, task.currentTaskDoneTimestamp.toString()
         )
     }
 }

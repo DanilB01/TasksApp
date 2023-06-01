@@ -23,11 +23,13 @@ class HomeViewModel: ViewModel() {
     private val _homeItems = MutableLiveData<List<HomeItem>>()
     val homeItems: LiveData<List<HomeItem>> = _homeItems
 
-    fun updateTask(task: Task) {
+    fun markTaskDone(task: Task) {
         viewModelScope.launch {
             when (task) {
                 is SingleTask -> singleTaskRepository.markTaskDone(task)
-                is RegularTask -> regularTaskRepository.markTaskDone(task)
+                is RegularTask -> regularTaskRepository.setCurrentTaskDoneTimestamp(
+                    task.copy(currentTaskDoneTimestamp = System.currentTimeMillis())
+                )
             }
         }
         updateHomeItems()
@@ -50,7 +52,7 @@ class HomeViewModel: ViewModel() {
                 HomeItem(
                     title = "Просрочено",
                     color = R.color.accent,
-                    tasks = getOverdueSingleTasks(singleTasks) + getOverdueRegularTasks(regularTasks)
+                    tasks = getOverdueSingleTasks(singleTasks)
                 )
             )
             result.add(
@@ -111,34 +113,14 @@ class HomeViewModel: ViewModel() {
                 )
             }
 
-    private fun getTodayRegularTasks(tasks: List<RegularTask>): List<TaskInfo> {
-        tasks.forEach {
-            val current = System.currentTimeMillis()
-            val timestamp = getNextTimestamp(it)
-            val flag1 = DateTimeUtils.atStartOfDay(getNextTimestamp(it)!!)
-            val flag2 = DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!)
-        }
-        return tasks
-            .filter {
-                System.currentTimeMillis() > DateTimeUtils.atStartOfDay(getNextTimestamp(it)!!) &&
-                        System.currentTimeMillis() < DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!) &&
-                        it.status == TaskStatus.ACTIVE
-            }
-            .map {
-                TaskInfo(
-                    name = it.name!!,
-                    date = DateTimeUtils.getDateString(getNextTimestamp(it)!!),
-                    status = it.status,
-                    task = it
-                )
-            }
-    }
-
-    private fun getOverdueRegularTasks(tasks: List<RegularTask>): List<TaskInfo> =
+    private fun getTodayRegularTasks(tasks: List<RegularTask>): List<TaskInfo> =
         tasks
             .filter {
-                System.currentTimeMillis() > DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!) &&
-                        it.status == TaskStatus.ACTIVE
+                /*System.currentTimeMillis() > DateTimeUtils.atStartOfDay(it.creationTimestamp!!) &&
+                        System.currentTimeMillis() < DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!) &&
+                        it.status == TaskStatus.ACTIVE*/
+                it.currentTaskDoneTimestamp == null ||
+                System.currentTimeMillis() > DateTimeUtils.atEndOfDay(it.currentTaskDoneTimestamp)
             }
             .map {
                 TaskInfo(
@@ -152,15 +134,16 @@ class HomeViewModel: ViewModel() {
     private fun getDoneRegularTasks(tasks: List<RegularTask>): List<TaskInfo> =
         tasks
             .filter {
-                System.currentTimeMillis() > DateTimeUtils.atStartOfDay(getNextTimestamp(it)!!) &&
+                /*System.currentTimeMillis() > DateTimeUtils.atStartOfDay(getNextTimestamp(it)!!) &&
                         System.currentTimeMillis() < DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!) &&
-                        it.status == TaskStatus.DONE
+                        it.status == TaskStatus.DONE*/
+                 checkIsRegularTaskDone(it) || it.status == TaskStatus.DONE
             }
             .map {
                 TaskInfo(
                     name = it.name!!,
                     date = DateTimeUtils.getDateString(getNextTimestamp(it)!!),
-                    status = it.status,
+                    status = TaskStatus.DONE,
                     task = it
                 )
             }
@@ -171,4 +154,7 @@ class HomeViewModel: ViewModel() {
         TaskPeriod.MONTH -> DateTimeUtils.getNextMonthTimestamp(task.creationTimestamp!!, task.periodValue!!)
         null -> null
     }
+
+    private fun checkIsRegularTaskDone(task: RegularTask) = task.currentTaskDoneTimestamp != null &&
+            System.currentTimeMillis() < DateTimeUtils.atEndOfDay(task.currentTaskDoneTimestamp)
 }

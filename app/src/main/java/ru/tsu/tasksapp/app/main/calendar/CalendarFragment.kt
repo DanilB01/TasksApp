@@ -33,9 +33,7 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), TaskItemListener 
         }
     }
 
-    override fun onTaskDone(task: Task) {
-        viewModel.updateTask(task)
-    }
+    override fun onTaskDone(task: Task) = Unit
 
     override fun onTaskClicked(task: Task) {
         //TODO("Not yet implemented")

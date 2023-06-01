@@ -6,6 +6,7 @@ import ru.tsu.tasksapp.domain.task.TaskStatus
 data class RegularTask(
     val id: Int = 0,
     val creationTimestamp: Long? = null,
+    val currentTaskDoneTimestamp: Long? = null,
     val name: String? = null,
     val time: String? = null,
     val periodValue: Int? = null,

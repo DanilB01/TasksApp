@@ -27,6 +27,10 @@ class TaskItemAdapter(
     inner class TaskItemViewHolder(view: View) : ViewHolder(view) {
         private val binding: ItemHomeTaskBinding by lazy { ItemHomeTaskBinding.bind(view) }
 
+        init {
+            binding.itemHomeTaskCheckbox.isClickable = false
+        }
+
         fun bind(item: TaskInfo) = with(binding) {
             itemHomeTaskCheckbox.text = item.name
             itemHomeTaskDateText.text = item.date
@@ -44,6 +48,13 @@ class TaskItemAdapter(
                 itemHomeTaskCheckbox.setTextColor(root.context.resources.getColor(R.color.textLight))
                 itemHoneTaskRegularityText.setTextColor(root.context.resources.getColor(R.color.textLight))
                 itemHomeTaskEditIcon.setColorFilter(root.context.resources.getColor(R.color.textLight))
+            } else {
+                itemHomeTaskCheckbox.isChecked = false
+                itemHomeTaskCheckbox.isEnabled = true
+                itemHomeTaskDateText.setTextColor(root.context.resources.getColor(R.color.text))
+                itemHomeTaskCheckbox.setTextColor(root.context.resources.getColor(R.color.text))
+                itemHoneTaskRegularityText.setTextColor(root.context.resources.getColor(R.color.text))
+                itemHomeTaskEditIcon.setColorFilter(root.context.resources.getColor(R.color.text))
             }
 
             binding.itemHomeTaskDateText.setOnClickListener {

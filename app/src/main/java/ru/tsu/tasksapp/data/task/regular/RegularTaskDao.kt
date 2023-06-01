@@ -18,4 +18,7 @@ interface RegularTaskDao {
 
     @Query("UPDATE regular_tasks SET status = :status WHERE id = :id")
     suspend fun markTaskDone(id: Int, status: String)
+
+    @Query("UPDATE regular_tasks SET currentTaskDoneTimestamp = :timestamp WHERE id = :id")
+    suspend fun setCurrentDoneDate(id: Int, timestamp: String)
 }

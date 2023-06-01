@@ -31,7 +31,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
     }
 
     override fun onTaskDone(task: Task) {
-        viewModel.updateTask(task)
+        viewModel.markTaskDone(task)
     }
 
     override fun onTaskClicked(task: Task) {

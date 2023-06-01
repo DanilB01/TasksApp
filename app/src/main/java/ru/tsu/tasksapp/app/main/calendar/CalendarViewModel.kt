@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
-import ru.tsu.tasksapp.app.main.home.HomeItem
+import ru.tsu.tasksapp.app.main.TaskItemAdapter
 import ru.tsu.tasksapp.domain.common.TaskInfo
 import ru.tsu.tasksapp.domain.task.Task
 import ru.tsu.tasksapp.domain.task.TaskStatus
@@ -17,7 +16,7 @@ import ru.tsu.tasksapp.domain.task.regular.TaskPeriod
 import ru.tsu.tasksapp.domain.task.single.SingleTask
 import ru.tsu.tasksapp.domain.task.single.SingleTaskRepository
 
-class CalendarViewModel: ViewModel() {
+class CalendarViewModel : ViewModel() {
     private val singleTaskRepository = SingleTaskRepository()
     private val regularTaskRepository = RegularTaskRepository()
 
@@ -25,15 +24,6 @@ class CalendarViewModel: ViewModel() {
     val tasks: LiveData<List<TaskInfo>> = _tasks
 
     private var currentTimestamp: Long = 0
-    fun updateTask(task: Task) {
-        viewModelScope.launch {
-            when (task) {
-                is SingleTask -> singleTaskRepository.markTaskDone(task)
-                is RegularTask -> regularTaskRepository.markTaskDone(task)
-            }
-        }
-        updateTasks(currentTimestamp)
-    }
 
     fun updateTasks(timestamp: Long) {
         currentTimestamp = timestamp
@@ -41,17 +31,17 @@ class CalendarViewModel: ViewModel() {
             val singleTasks = singleTaskRepository.getTasks()
             val regularTasks = regularTaskRepository.getTasks()
 
-            val res1 = getTodaySingleTasks(singleTasks, timestamp)
-            val res2 = getTodayRegularTasks(regularTasks, timestamp)
+            val res1 = getTodaySingleTasks(singleTasks)
+            val res2 = getTodayRegularTasks(regularTasks)
             _tasks.value = res1 + res2
         }
     }
 
-    private fun getTodaySingleTasks(tasks: List<SingleTask>, timestamp: Long): List<TaskInfo> =
+    private fun getTodaySingleTasks(tasks: List<SingleTask>): List<TaskInfo> =
         tasks
             .filter {
-                timestamp > DateTimeUtils.atStartOfDay(it.dateTimestamp!!) &&
-                timestamp < DateTimeUtils.atEndOfDay(it.dateTimestamp!!)
+                currentTimestamp > DateTimeUtils.atStartOfDay(it.dateTimestamp!!) &&
+                        currentTimestamp < DateTimeUtils.atEndOfDay(it.dateTimestamp!!)
             }
             .map {
                 TaskInfo(
@@ -62,25 +52,41 @@ class CalendarViewModel: ViewModel() {
                 )
             }
 
-    private fun getTodayRegularTasks(tasks: List<RegularTask>, timestamp: Long): List<TaskInfo> =
+    private fun getTodayRegularTasks(tasks: List<RegularTask>): List<TaskInfo> =
         tasks
             .filter {
-                timestamp > DateTimeUtils.atStartOfDay(getNextTimestamp(it)!!) &&
-                timestamp < DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!)
+                currentTimestamp > DateTimeUtils.atStartOfDay(it.creationTimestamp!!) &&
+                        currentTimestamp < DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!)
             }
             .map {
                 TaskInfo(
                     name = it.name!!,
-                    date = DateTimeUtils.getDateString(getNextTimestamp(it)!!),
-                    status = it.status,
+                    date = "до ${DateTimeUtils.getDateString(getNextTimestamp(it)!!)}",
+                    status = getRegularTaskStatusForDay(it),
                     task = it
                 )
             }
 
-    private fun getNextTimestamp(task: RegularTask) = when(task.periodVariant) {
-        TaskPeriod.DAY -> DateTimeUtils.getNextDayTimestamp(task.creationTimestamp!!, task.periodValue!!)
-        TaskPeriod.WEEK -> DateTimeUtils.getNextWeekTimestamp(task.creationTimestamp!!, task.periodValue!!)
-        TaskPeriod.MONTH -> DateTimeUtils.getNextMonthTimestamp(task.creationTimestamp!!, task.periodValue!!)
+    private fun getNextTimestamp(task: RegularTask) = when (task.periodVariant) {
+        TaskPeriod.DAY -> DateTimeUtils.getNextDayTimestamp(
+            task.creationTimestamp!!,
+            task.periodValue!!
+        )
+        TaskPeriod.WEEK -> DateTimeUtils.getNextWeekTimestamp(
+            task.creationTimestamp!!,
+            task.periodValue!!
+        )
+        TaskPeriod.MONTH -> DateTimeUtils.getNextMonthTimestamp(
+            task.creationTimestamp!!,
+            task.periodValue!!
+        )
         null -> null
+    }
+
+    private fun getRegularTaskStatusForDay(task: RegularTask): TaskStatus = when {
+        task.status == TaskStatus.DONE -> TaskStatus.DONE
+        task.currentTaskDoneTimestamp == null -> TaskStatus.ACTIVE
+        currentTimestamp > DateTimeUtils.atEndOfDay(task.currentTaskDoneTimestamp) -> TaskStatus.ACTIVE
+        else -> TaskStatus.DONE
     }
 }
