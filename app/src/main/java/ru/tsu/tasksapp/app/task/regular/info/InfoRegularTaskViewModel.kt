@@ -69,7 +69,7 @@ class InfoRegularTaskViewModel: ViewModel() {
                 currentTaskId = _currentTask.value?.id!!,
                 isForSingleTask = false
             )
-            _isShowAddPhotoDialog.value = true
+            _isShowAddPhotoDialog.value = currentUserEmail != null
         }
     }
 
@@ -85,7 +85,7 @@ class InfoRegularTaskViewModel: ViewModel() {
                     currentTaskId = _currentTask.value?.id!!,
                     isForSingleTask = false
                 )
-                _isShowAddPhotoDialog.value = true
+                _isShowAddPhotoDialog.value = currentUserEmail != null
             }
         }
     }

@@ -64,7 +64,7 @@ class InfoSingleTaskViewModel: ViewModel() {
                 currentTaskId = _currentTask.value?.id!!,
                 isForSingleTask = true
             )
-            _isShowAddPhotoDialog.value = true
+            _isShowAddPhotoDialog.value = currentUserEmail != null
         }
     }
 
