@@ -1,29 +1,21 @@
 package ru.tsu.tasksapp.app.task.single.info
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
-import ru.tsu.tasksapp.app.photo.PhotoAdapter
-import ru.tsu.tasksapp.app.photo.PhotoItem
-import ru.tsu.tasksapp.app.photo.PhotoListener
-import ru.tsu.tasksapp.app.photo.WishAddPhotoBottomSheetDialog
+import ru.tsu.tasksapp.app.photo.*
+import ru.tsu.tasksapp.domain.photo.PhotoItem
 import ru.tsu.tasksapp.databinding.ActivityInfoSingleTaskBinding
 import ru.tsu.tasksapp.domain.task.TaskStatus
 
-class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_task) {
+class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_task),
+    WishAddPhotoListener {
     private val viewBinding: ActivityInfoSingleTaskBinding by viewBinding()
     private val viewModel: InfoSingleTaskViewModel by viewModels()
-    private val adapter: PhotoAdapter by lazy {
-        PhotoAdapter(object : PhotoListener {
-            override fun removePhoto(photo: PhotoItem) {
-                //TODO("Not yet implemented")
-            }
-        })
-    }
+    private val adapter: PhotoAdapter by lazy { PhotoAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,5 +76,14 @@ class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_t
         viewModel.isShowAddPhotoDialog.observe(this) {
             if (it) WishAddPhotoBottomSheetDialog().show(supportFragmentManager, "")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.reloadPhotos()
+    }
+
+    override fun addPhoto() {
+        ChoosePhotoBottomSheetDialog().show(supportFragmentManager, "")
     }
 }

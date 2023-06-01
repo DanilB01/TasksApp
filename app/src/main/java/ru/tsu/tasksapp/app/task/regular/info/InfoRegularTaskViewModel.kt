@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
-import ru.tsu.tasksapp.app.photo.PhotoItem
+import ru.tsu.tasksapp.domain.photo.PhotoItem
+import ru.tsu.tasksapp.app.photo.TaskValues
+import ru.tsu.tasksapp.domain.photo.PhotoRepository
 import ru.tsu.tasksapp.domain.session.SessionRepository
 import ru.tsu.tasksapp.domain.task.TaskStatus
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
@@ -16,6 +18,7 @@ import ru.tsu.tasksapp.domain.task.regular.RegularTaskRepository
 class InfoRegularTaskViewModel: ViewModel() {
     private val regularTaskRepository = RegularTaskRepository()
     private val sessionRepository = SessionRepository()
+    private val photoRepository = PhotoRepository()
 
     private val _currentTask = MutableLiveData<RegularTask>()
     val currentTask: LiveData<RegularTask> = _currentTask
@@ -38,6 +41,12 @@ class InfoRegularTaskViewModel: ViewModel() {
             field = value
         }
 
+    fun reloadPhotos() {
+        viewModelScope.launch {
+            updatePhotos()
+        }
+    }
+
     fun loadTaskInfo(taskId: Int) {
         viewModelScope.launch {
             val task = regularTaskRepository.getTaskById(taskId) ?: return@launch
@@ -47,7 +56,7 @@ class InfoRegularTaskViewModel: ViewModel() {
                     task.status == TaskStatus.ACTIVE
 
             currentUserEmail = sessionRepository.getEmailFromSession()
-            getPhotos()
+            updatePhotos()
         }
     }
 
@@ -56,6 +65,10 @@ class InfoRegularTaskViewModel: ViewModel() {
             _currentTask.value?.let { regularTaskRepository.markTaskDone(it) }
             _currentTask.value = _currentTask.value?.copy(status = TaskStatus.DONE)
             _isTaskActiveForToday.value = false
+            TaskValues.setValues(
+                currentTaskId = _currentTask.value?.id!!,
+                isForSingleTask = false
+            )
             _isShowAddPhotoDialog.value = true
         }
     }
@@ -68,6 +81,10 @@ class InfoRegularTaskViewModel: ViewModel() {
                 )
                 _currentTask.value = it.copy(currentTaskDoneTimestamp = System.currentTimeMillis())
                 _isTaskActiveForToday.value = false
+                TaskValues.setValues(
+                    currentTaskId = _currentTask.value?.id!!,
+                    isForSingleTask = false
+                )
                 _isShowAddPhotoDialog.value = true
             }
         }
@@ -82,18 +99,13 @@ class InfoRegularTaskViewModel: ViewModel() {
     private fun checkIfTaskActiveForToday(task: RegularTask) = task.currentTaskDoneTimestamp == null ||
             System.currentTimeMillis() > DateTimeUtils.atEndOfDay(task.currentTaskDoneTimestamp)
 
-    private fun getPhotos() {
-        // TODO: add getting photo from db
-        val res = mutableListOf<PhotoItem>()
-        repeat(5) {
-            res.add(
-                PhotoItem(
-                    drawable = R.drawable.pic_status_active,
-                    name = "image.png",
-                    size = "1.5 МБ"
-                )
-            )
-        }
-        _photos.value = res
+    private suspend fun updatePhotos() {
+        val taskId = TaskValues.getCurrentTaskId
+        val isForSingleTask = TaskValues.getIsForSingleTask
+        if (taskId == null || isForSingleTask == null) return
+        _photos.value = photoRepository.getPhotosByTask(
+            taskId = taskId,
+            isForSingleTask = isForSingleTask
+        )
     }
 }

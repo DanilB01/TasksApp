@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
+import ru.tsu.tasksapp.app.photo.TaskValues
 import ru.tsu.tasksapp.domain.common.TaskInfo
 import ru.tsu.tasksapp.domain.session.SessionRepository
 import ru.tsu.tasksapp.domain.task.Task
@@ -35,12 +36,24 @@ class HomeViewModel: ViewModel() {
     fun markTaskDone(task: Task) {
         viewModelScope.launch {
             when (task) {
-                is SingleTask -> singleTaskRepository.markTaskDone(task)
-                is RegularTask -> regularTaskRepository.setCurrentTaskDoneTimestamp(
-                    task.copy(currentTaskDoneTimestamp = System.currentTimeMillis())
-                )
+                is SingleTask -> {
+                    singleTaskRepository.markTaskDone(task)
+                    TaskValues.setValues(
+                        currentTaskId = task.id,
+                        isForSingleTask = true
+                    )
+                }
+                is RegularTask -> {
+                    regularTaskRepository.setCurrentTaskDoneTimestamp(
+                        task.copy(currentTaskDoneTimestamp = System.currentTimeMillis())
+                    )
+                    TaskValues.setValues(
+                        currentTaskId = task.id,
+                        isForSingleTask = false
+                    )
+                }
             }
-            _isShowAddPhotoDialog.value = sessionRepository.getEmailFromSession()?.isNotEmpty()
+            _isShowAddPhotoDialog.value = !sessionRepository.getEmailFromSession().isNullOrEmpty()
         }
         updateHomeItems()
     }

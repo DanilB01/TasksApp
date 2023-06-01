@@ -32,6 +32,7 @@ class WishAddPhotoBottomSheetDialog: BottomSheetDialogFragment() {
         }
 
         viewBinding.wishNoButton.setOnClickListener {
+            TaskValues.removeValues()
             dismiss()
         }
     }

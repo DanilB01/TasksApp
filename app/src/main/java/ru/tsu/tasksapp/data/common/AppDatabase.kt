@@ -4,6 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import ru.tsu.tasksapp.data.credential.CredentialDao
 import ru.tsu.tasksapp.data.credential.CredentialEntity
+import ru.tsu.tasksapp.data.photo.PhotoDao
+import ru.tsu.tasksapp.data.photo.PhotoEntity
 import ru.tsu.tasksapp.data.session.SessionDao
 import ru.tsu.tasksapp.data.session.SessionEntity
 import ru.tsu.tasksapp.data.task.regular.RegularTaskDao
@@ -16,7 +18,8 @@ import ru.tsu.tasksapp.data.task.single.SingleTaskEntity
         CredentialEntity::class,
         SessionEntity::class,
         SingleTaskEntity::class,
-        RegularTaskEntity::class
+        RegularTaskEntity::class,
+        PhotoEntity::class
    ],
     version = 1
 )
@@ -25,4 +28,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun getSessionDao(): SessionDao
     abstract fun getSingleTaskDao(): SingleTaskDao
     abstract fun getRegularTaskDao(): RegularTaskDao
+    abstract fun getPhotoDao(): PhotoDao
 }

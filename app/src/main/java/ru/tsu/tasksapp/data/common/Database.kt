@@ -14,6 +14,7 @@ object Database {
     fun getSessionDao() = database.getSessionDao()
     fun getSingleTaskDao() = database.getSingleTaskDao()
     fun getRegularTaskDao() = database.getRegularTaskDao()
+    fun getPhotoDao() = database.getPhotoDao()
 
     private fun build(context: Context) = Room.databaseBuilder(
         context,

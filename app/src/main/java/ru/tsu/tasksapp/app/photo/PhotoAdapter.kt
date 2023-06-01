@@ -1,14 +1,18 @@
 package ru.tsu.tasksapp.app.photo
 
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.databinding.ItemPhotoBinding
+import ru.tsu.tasksapp.domain.photo.PhotoItem
 
 class PhotoAdapter(
-    private val listener: PhotoListener,
+    private val listener: PhotoListener? = null,
 ) : RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     private var items: List<PhotoItem> = emptyList()
@@ -22,12 +26,14 @@ class PhotoAdapter(
         private val binding: ItemPhotoBinding by lazy { ItemPhotoBinding.bind(view) }
 
         fun bind(item: PhotoItem) = with(binding) {
-            photoImage.setImageDrawable(root.context.getDrawable(item.drawable))
+            val bitmap = MediaStore.Images.Media.getBitmap(root.context.contentResolver, item.uri.toUri())
+            photoImage.setImageBitmap(bitmap)
             photoName.text = item.name
             photoSize.text = item.size
             protoRemoveImage.setOnClickListener {
-                listener.removePhoto(item)
+                listener?.removePhoto(item)
             }
+            protoRemoveImage.isVisible = listener != null
         }
     }
 

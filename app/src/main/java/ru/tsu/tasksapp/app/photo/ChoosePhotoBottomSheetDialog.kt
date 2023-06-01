@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.tsu.tasksapp.databinding.BottomSheetChoosePhotoBinding
+import ru.tsu.tasksapp.domain.photo.PhotoItem
 
 class ChoosePhotoBottomSheetDialog : BottomSheetDialogFragment() {
     private lateinit var viewBinding: BottomSheetChoosePhotoBinding
@@ -14,9 +17,14 @@ class ChoosePhotoBottomSheetDialog : BottomSheetDialogFragment() {
     private val adapter: PhotoAdapter by lazy {
         PhotoAdapter(object : PhotoListener{
             override fun removePhoto(photo: PhotoItem) {
-                //TODO("Not yet implemented")
+                viewModel.removePhoto(photo)
             }
         })
+    }
+    private val contract = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        it?.let { uri ->
+            viewModel.savePhoto(uri)
+        }
     }
 
     override fun onCreateView(
@@ -35,6 +43,13 @@ class ChoosePhotoBottomSheetDialog : BottomSheetDialogFragment() {
             dismiss()
         }
         viewBinding.choosePhotoRecycler.adapter = adapter
+        viewBinding.choosePhotoButton.setOnClickListener {
+            dismiss()
+        }
+
+        viewBinding.choosePhotoFromDeviceButton.setOnClickListener {
+            contract.launch("image/*")
+        }
 
         viewModel.photos.observe(viewLifecycleOwner) {
             adapter.update(it)
