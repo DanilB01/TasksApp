@@ -9,6 +9,7 @@ import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.photo.PhotoAdapter
 import ru.tsu.tasksapp.app.photo.PhotoItem
 import ru.tsu.tasksapp.app.photo.PhotoListener
+import ru.tsu.tasksapp.app.photo.WishAddPhotoBottomSheetDialog
 import ru.tsu.tasksapp.databinding.ActivityInfoRegularTaskBinding
 import ru.tsu.tasksapp.domain.task.TaskStatus
 
@@ -95,6 +96,10 @@ class InfoRegularTaskActivity : AppCompatActivity(R.layout.activity_info_regular
 
         viewModel.photos.observe(this@InfoRegularTaskActivity) {
             adapter.update(it)
+        }
+
+        viewModel.isShowAddPhotoDialog.observe(this@InfoRegularTaskActivity) {
+            if (it) WishAddPhotoBottomSheetDialog().show(supportFragmentManager, "")
         }
     }
 }

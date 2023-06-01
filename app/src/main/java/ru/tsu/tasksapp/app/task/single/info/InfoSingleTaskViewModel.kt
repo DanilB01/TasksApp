@@ -29,6 +29,9 @@ class InfoSingleTaskViewModel: ViewModel() {
     private val _photos = MutableLiveData<List<PhotoItem>>()
     val photos: LiveData<List<PhotoItem>> = _photos
 
+    private val _isShowAddPhotoDialog = MutableLiveData<Boolean>()
+    val isShowAddPhotoDialog: LiveData<Boolean> = _isShowAddPhotoDialog
+
     private var currentUserEmail: String? = null
         set(value) {
             _isPhotosVisible.value = value != null
@@ -49,6 +52,7 @@ class InfoSingleTaskViewModel: ViewModel() {
         viewModelScope.launch {
             _currentTask.value?.let { singleTaskRepository.markTaskDone(it) }
             _currentTask.value = _currentTask.value?.copy(status = TaskStatus.DONE)
+            _isShowAddPhotoDialog.value = true
         }
     }
 

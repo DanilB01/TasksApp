@@ -80,5 +80,9 @@ class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_t
         viewModel.photos.observe(this) {
             adapter.update(it)
         }
+
+        viewModel.isShowAddPhotoDialog.observe(this) {
+            if (it) WishAddPhotoBottomSheetDialog().show(supportFragmentManager, "")
+        }
     }
 }
