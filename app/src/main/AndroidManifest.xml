@@ -11,6 +11,9 @@
         android:theme="@style/Theme.TasksApp"
         tools:targetApi="31">
         <activity
+            android:name=".app.task.regular.info.InfoRegularTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".app.task.single.info.InfoSingleTaskActivity"
             android:exported="false" />
         <activity

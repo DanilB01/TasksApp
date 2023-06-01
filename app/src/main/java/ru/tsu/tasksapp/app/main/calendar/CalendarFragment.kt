@@ -10,6 +10,8 @@ import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.app.main.TaskItemAdapter
 import ru.tsu.tasksapp.app.main.TaskItemListener
+import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskActivity
+import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskViewModel
 import ru.tsu.tasksapp.app.task.single.info.InfoSingleTaskActivity
 import ru.tsu.tasksapp.databinding.FragmentCalendarBinding
 import ru.tsu.tasksapp.domain.task.Task
@@ -48,7 +50,13 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), TaskItemListener 
                     }
                 )
             }
-            is RegularTask -> {}
+            is RegularTask -> {
+                startActivity(
+                    Intent(requireContext(), InfoRegularTaskActivity::class.java).apply {
+                        putExtra("taskId", task.id)
+                    }
+                )
+            }
             else -> return
         }
     }

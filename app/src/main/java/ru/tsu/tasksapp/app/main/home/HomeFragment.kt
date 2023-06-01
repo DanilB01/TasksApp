@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.main.TaskItemListener
+import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskActivity
+import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskViewModel
 import ru.tsu.tasksapp.app.task.single.info.InfoSingleTaskActivity
 import ru.tsu.tasksapp.databinding.FragmentHomeBinding
 import ru.tsu.tasksapp.domain.task.Task
@@ -47,7 +49,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
                     }
                 )
             }
-            is RegularTask -> {}
+            is RegularTask -> {
+                startActivity(
+                    Intent(requireContext(), InfoRegularTaskActivity::class.java).apply {
+                        putExtra("taskId", task.id)
+                    }
+                )
+            }
             else -> return
         }
     }

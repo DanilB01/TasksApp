@@ -10,6 +10,9 @@ interface RegularTaskDao {
     @Query("SELECT * FROM regular_tasks")
     suspend fun getRegularTasks(): List<RegularTaskEntity>?
 
+    @Query("SELECT * FROM regular_tasks WHERE id = :id LIMIT 1")
+    suspend fun getRegularTaskById(id: Int): RegularTaskEntity?
+
     @Insert
     suspend fun addRegularTask(task: RegularTaskEntity)
 
@@ -21,4 +24,7 @@ interface RegularTaskDao {
 
     @Query("UPDATE regular_tasks SET currentTaskDoneTimestamp = :timestamp WHERE id = :id")
     suspend fun setCurrentDoneDate(id: Int, timestamp: String)
+
+    @Query("DELETE FROM regular_tasks WHERE id = :id")
+    suspend fun deleteRegularTasksById(id: Int)
 }

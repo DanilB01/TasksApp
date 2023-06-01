@@ -88,4 +88,24 @@ class RegularTaskRepository {
             task.id, task.currentTaskDoneTimestamp.toString()
         )
     }
+
+    suspend fun getTaskById(id: Int): RegularTask? {
+        val entity = Database.getRegularTaskDao().getRegularTaskById(id) ?: return null
+        return RegularTask(
+            id = entity.id,
+            creationTimestamp = entity.creationTimestamp.toLong(),
+            currentTaskDoneTimestamp = entity.currentTaskDoneTimestamp.toLongOrNull(),
+            name = entity.name,
+            time = entity.time,
+            periodValue = entity.periodValue,
+            periodVariant = TaskPeriod.valueOf(entity.periodVariant),
+            regularity = entity.regularity,
+            notificationTime = entity.notificationTime,
+            status = TaskStatus.valueOf(entity.status)
+        )
+    }
+
+    suspend fun deleteTaskById(id: Int) {
+        Database.getRegularTaskDao().deleteRegularTasksById(id)
+    }
 }
