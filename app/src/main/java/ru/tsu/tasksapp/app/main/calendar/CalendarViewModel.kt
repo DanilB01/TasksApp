@@ -61,7 +61,7 @@ class CalendarViewModel : ViewModel() {
             .map {
                 TaskInfo(
                     name = it.name!!,
-                    date = "до ${DateTimeUtils.getDateString(getNextTimestamp(it)!!)}",
+                    date = DateTimeUtils.getDateString(getNextTimestamp(it)!!),
                     status = getRegularTaskStatusForDay(it),
                     task = it
                 )

@@ -33,6 +33,7 @@ class InfoRegularTaskViewModel: ViewModel() {
         viewModelScope.launch {
             _currentTask.value?.let { regularTaskRepository.markTaskDone(it) }
             _currentTask.value = _currentTask.value?.copy(status = TaskStatus.DONE)
+            _isTaskActiveForToday.value = false
         }
     }
 
