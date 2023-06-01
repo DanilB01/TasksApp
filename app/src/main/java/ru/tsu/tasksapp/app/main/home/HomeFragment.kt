@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.main.TaskItemListener
+import ru.tsu.tasksapp.app.photo.WishAddPhotoBottomSheetDialog
 import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskActivity
 import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskViewModel
 import ru.tsu.tasksapp.app.task.single.info.InfoSingleTaskActivity
@@ -38,6 +39,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
 
     override fun onTaskDone(task: Task) {
         viewModel.markTaskDone(task)
+        WishAddPhotoBottomSheetDialog().show(requireActivity().supportFragmentManager, "")
     }
 
     override fun onTaskClicked(task: Task) {

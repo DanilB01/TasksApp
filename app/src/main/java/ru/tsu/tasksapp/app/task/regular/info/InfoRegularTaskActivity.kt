@@ -27,6 +27,7 @@ class InfoRegularTaskActivity : AppCompatActivity(R.layout.activity_info_regular
         viewBinding.infoRegularRemoveTaskButton.setOnClickListener {
             if (viewModel.currentTask.value == null) return@setOnClickListener
             viewModel.deleteTask()
+            finish()
         }
 
         viewBinding.infoRegularTaskDoneForTodayButton.setOnClickListener {
