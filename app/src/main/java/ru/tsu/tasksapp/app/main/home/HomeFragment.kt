@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.main.TaskItemListener
+import ru.tsu.tasksapp.app.photo.TaskValues
 import ru.tsu.tasksapp.app.photo.WishAddPhotoBottomSheetDialog
 import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskActivity
 import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskViewModel
@@ -51,6 +52,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
     override fun onTaskClicked(task: Task) {
         when (task) {
             is SingleTask -> {
+                TaskValues.setValues(
+                    currentTaskId = task.id,
+                    isForSingleTask = true
+                )
                 startActivity(
                     Intent(requireContext(), InfoSingleTaskActivity::class.java).apply {
                         putExtra("taskId", task.id)
@@ -58,6 +63,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
                 )
             }
             is RegularTask -> {
+                TaskValues.setValues(
+                    currentTaskId = task.id,
+                    isForSingleTask = false
+                )
                 startActivity(
                     Intent(requireContext(), InfoRegularTaskActivity::class.java).apply {
                         putExtra("taskId", task.id)

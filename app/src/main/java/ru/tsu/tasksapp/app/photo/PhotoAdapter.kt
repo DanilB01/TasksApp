@@ -1,5 +1,8 @@
 package ru.tsu.tasksapp.app.photo
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View

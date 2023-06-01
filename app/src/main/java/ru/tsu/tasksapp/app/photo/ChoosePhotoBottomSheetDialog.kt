@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.viewModels
@@ -21,7 +22,7 @@ class ChoosePhotoBottomSheetDialog : BottomSheetDialogFragment() {
             }
         })
     }
-    private val contract = registerForActivityResult(ActivityResultContracts.GetContent()) {
+    private val contract = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         it?.let { uri ->
             viewModel.savePhoto(uri)
         }
@@ -48,7 +49,7 @@ class ChoosePhotoBottomSheetDialog : BottomSheetDialogFragment() {
         }
 
         viewBinding.choosePhotoFromDeviceButton.setOnClickListener {
-            contract.launch("image/*")
+            contract.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
         viewModel.photos.observe(viewLifecycleOwner) {
