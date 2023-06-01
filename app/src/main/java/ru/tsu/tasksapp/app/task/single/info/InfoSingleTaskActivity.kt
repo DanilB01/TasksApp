@@ -1,6 +1,7 @@
 package ru.tsu.tasksapp.app.task.single.info
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -54,6 +55,11 @@ class InfoSingleTaskActivity : AppCompatActivity(R.layout.activity_info_single_t
             if (it && viewModel.currentTask.value?.status == TaskStatus.ACTIVE) {
                 viewBinding.infoTaskStatus.setImageDrawable(resources.getDrawable(R.drawable.pic_status_overdue))
             }
+        }
+
+        viewModel.isPhotosVisible.observe(this) {
+            viewBinding.infoSinglePhotoCard.isVisible = it &&
+                    viewModel.currentTask.value?.status == TaskStatus.DONE
         }
     }
 }
