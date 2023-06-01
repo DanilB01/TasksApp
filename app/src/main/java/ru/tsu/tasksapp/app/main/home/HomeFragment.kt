@@ -46,7 +46,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
 
     override fun onTaskDone(task: Task) {
         viewModel.markTaskDone(task)
-        WishAddPhotoBottomSheetDialog().show(requireActivity().supportFragmentManager, "")
     }
 
     override fun onTaskClicked(task: Task) {
