@@ -22,7 +22,7 @@ class HomeAdapter(
 
     inner class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding: ItemHomeBinding by lazy { ItemHomeBinding.bind(view) }
-        private val adapter: TaskItemAdapter by lazy { TaskItemAdapter(listener) }
+        private val adapter: TaskItemAdapter by lazy { TaskItemAdapter(listener, false) }
 
         init {
             binding.itemHomeRecycler.adapter = adapter

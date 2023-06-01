@@ -11,9 +11,12 @@
         android:theme="@style/Theme.TasksApp"
         tools:targetApi="31">
         <activity
-            android:name=".app.task.regular.add.ChooseNameRegularTaskActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:name=".app.task.single.info.InfoSingleTaskActivity"
             android:exported="false" />
+        <activity
+            android:name=".app.task.regular.add.ChooseNameRegularTaskActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app.task.regular.add.AddRegularTaskActivity"
             android:exported="false" />

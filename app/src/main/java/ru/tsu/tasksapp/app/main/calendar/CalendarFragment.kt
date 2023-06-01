@@ -1,5 +1,6 @@
 package ru.tsu.tasksapp.app.main.calendar
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -9,13 +10,16 @@ import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.app.main.TaskItemAdapter
 import ru.tsu.tasksapp.app.main.TaskItemListener
+import ru.tsu.tasksapp.app.task.single.info.InfoSingleTaskActivity
 import ru.tsu.tasksapp.databinding.FragmentCalendarBinding
 import ru.tsu.tasksapp.domain.task.Task
+import ru.tsu.tasksapp.domain.task.regular.RegularTask
+import ru.tsu.tasksapp.domain.task.single.SingleTask
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar), TaskItemListener {
     private val viewBinding: FragmentCalendarBinding by viewBinding()
     private val viewModel: CalendarViewModel by viewModels()
-    private val adapter: TaskItemAdapter by lazy { TaskItemAdapter(this) }
+    private val adapter: TaskItemAdapter by lazy { TaskItemAdapter(this, true) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,6 +40,16 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), TaskItemListener 
     override fun onTaskDone(task: Task) = Unit
 
     override fun onTaskClicked(task: Task) {
-        //TODO("Not yet implemented")
+        when (task) {
+            is SingleTask -> {
+                startActivity(
+                    Intent(requireContext(), InfoSingleTaskActivity::class.java).apply {
+                        putExtra("taskId", task.id)
+                    }
+                )
+            }
+            is RegularTask -> {}
+            else -> return
+        }
     }
 }

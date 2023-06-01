@@ -1,5 +1,6 @@
 package ru.tsu.tasksapp.app.main.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -7,8 +8,11 @@ import androidx.fragment.app.viewModels
 import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.main.TaskItemListener
+import ru.tsu.tasksapp.app.task.single.info.InfoSingleTaskActivity
 import ru.tsu.tasksapp.databinding.FragmentHomeBinding
 import ru.tsu.tasksapp.domain.task.Task
+import ru.tsu.tasksapp.domain.task.regular.RegularTask
+import ru.tsu.tasksapp.domain.task.single.SingleTask
 
 class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
     private val viewBinding: FragmentHomeBinding by viewBinding()
@@ -35,6 +39,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), TaskItemListener {
     }
 
     override fun onTaskClicked(task: Task) {
-        //TODO("Not yet implemented")
+        when (task) {
+            is SingleTask -> {
+                startActivity(
+                    Intent(requireContext(), InfoSingleTaskActivity::class.java).apply {
+                        putExtra("taskId", task.id)
+                    }
+                )
+            }
+            is RegularTask -> {}
+            else -> return
+        }
     }
 }

@@ -69,4 +69,21 @@ class SingleTaskRepository {
             status = TaskStatus.DONE.name
         )
     }
+
+    suspend fun getTaskById(id: Int): SingleTask? {
+        val entity = Database.getSingleTaskDao().getSingleTaskById(id) ?: return null
+        return SingleTask(
+                id = entity.id,
+                dateTimestamp = entity.dateTimestamp.toLong(),
+                name = entity.name,
+                time = entity.time,
+                date = entity.date,
+                notificationTime = entity.notificationTime,
+                status = TaskStatus.valueOf(entity.status)
+            )
+    }
+
+    suspend fun deleteTaskById(id: Int) {
+        Database.getSingleTaskDao().deleteSingleTaskById(id)
+    }
 }

@@ -14,7 +14,8 @@ import ru.tsu.tasksapp.domain.task.TaskStatus
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
 
 class TaskItemAdapter(
-    private val listener: TaskItemListener
+    private val listener: TaskItemListener,
+    private val isCalendarScreen: Boolean
 ) : RecyclerView.Adapter<TaskItemAdapter.TaskItemViewHolder>() {
 
     private var items: List<TaskInfo> = emptyList()
@@ -28,11 +29,11 @@ class TaskItemAdapter(
         private val binding: ItemHomeTaskBinding by lazy { ItemHomeTaskBinding.bind(view) }
 
         init {
-            binding.itemHomeTaskCheckbox.isClickable = false
+            if (isCalendarScreen) binding.itemHomeTaskCheckbox.isClickable = false
         }
 
         fun bind(item: TaskInfo) = with(binding) {
-            itemHomeTaskCheckbox.text = item.name
+            itemHomeTaskNameText.text = item.name
             itemHomeTaskDateText.text = item.date
 
             itemHomeRegularTaskIcon.isVisible = item.task is RegularTask
@@ -45,23 +46,23 @@ class TaskItemAdapter(
                 itemHomeTaskCheckbox.isChecked = true
                 itemHomeTaskCheckbox.isEnabled = false
                 itemHomeTaskDateText.setTextColor(root.context.resources.getColor(R.color.textLight))
-                itemHomeTaskCheckbox.setTextColor(root.context.resources.getColor(R.color.textLight))
+                itemHomeTaskNameText.setTextColor(root.context.resources.getColor(R.color.textLight))
                 itemHoneTaskRegularityText.setTextColor(root.context.resources.getColor(R.color.textLight))
                 itemHomeTaskEditIcon.setColorFilter(root.context.resources.getColor(R.color.textLight))
             } else {
                 itemHomeTaskCheckbox.isChecked = false
                 itemHomeTaskCheckbox.isEnabled = true
                 itemHomeTaskDateText.setTextColor(root.context.resources.getColor(R.color.text))
-                itemHomeTaskCheckbox.setTextColor(root.context.resources.getColor(R.color.text))
+                itemHomeTaskNameText.setTextColor(root.context.resources.getColor(R.color.text))
                 itemHoneTaskRegularityText.setTextColor(root.context.resources.getColor(R.color.text))
                 itemHomeTaskEditIcon.setColorFilter(root.context.resources.getColor(R.color.text))
             }
 
-            binding.itemHomeTaskDateText.setOnClickListener {
+            itemHomeTaskNameText.setOnClickListener {
                 listener.onTaskClicked(item.task)
             }
 
-            binding.itemHomeTaskCheckbox.setOnCheckedChangeListener { compoundButton, isChecked ->
+            itemHomeTaskCheckbox.setOnCheckedChangeListener { compoundButton, isChecked ->
                 if(isChecked) {
                     listener.onTaskDone(item.task)
                 }

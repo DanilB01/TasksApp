@@ -11,12 +11,21 @@
 
     <CheckBox
         android:id="@+id/itemHomeTaskCheckbox"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/text"
-        app:layout_constraintEnd_toStartOf="@+id/itemHomeTaskDateText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/itemHomeTaskNameText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/itemHomeTaskCheckbox"
+        app:layout_constraintEnd_toStartOf="@+id/itemHomeTaskDateText"
+        app:layout_constraintStart_toEndOf="@+id/itemHomeTaskCheckbox"
+        app:layout_constraintTop_toTopOf="@+id/itemHomeTaskCheckbox"
         tools:text="Помыть посуду" />
 
     <TextView
@@ -55,9 +64,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/text"
-        tools:text="Каждый день"
-        app:layout_constraintEnd_toEndOf="@+id/itemHomeTaskCheckbox"
+        app:layout_constraintEnd_toEndOf="@+id/itemHomeTaskNameText"
         app:layout_constraintStart_toEndOf="@+id/itemHomeRegularTaskIcon"
-        app:layout_constraintTop_toBottomOf="@+id/itemHomeTaskCheckbox" />
+        app:layout_constraintTop_toBottomOf="@+id/itemHomeTaskCheckbox"
+        tools:text="Каждый день" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

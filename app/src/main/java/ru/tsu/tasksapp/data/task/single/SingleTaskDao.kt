@@ -10,6 +10,9 @@ interface SingleTaskDao {
     @Query("SELECT * FROM single_tasks")
     suspend fun getSingleTasks(): List<SingleTaskEntity>?
 
+    @Query("SELECT * FROM single_tasks WHERE id = :id")
+    suspend fun getSingleTaskById(id: Int): SingleTaskEntity?
+
     @Insert
     suspend fun addSingleTask(task: SingleTaskEntity)
 
@@ -18,4 +21,7 @@ interface SingleTaskDao {
 
     @Query("UPDATE single_tasks SET status = :status WHERE id = :id")
     suspend fun markTaskDone(id: Int, status: String)
+
+    @Query("DELETE FROM single_tasks WHERE id = :id")
+    suspend fun deleteSingleTaskById(id: Int)
 }
