@@ -6,18 +6,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.tsu.tasksapp.app.common.DateTimeUtils
+import ru.tsu.tasksapp.domain.session.SessionRepository
 import ru.tsu.tasksapp.domain.task.TaskStatus
 import ru.tsu.tasksapp.domain.task.regular.RegularTask
 import ru.tsu.tasksapp.domain.task.regular.RegularTaskRepository
 
 class InfoRegularTaskViewModel: ViewModel() {
     private val regularTaskRepository = RegularTaskRepository()
+    private val sessionRepository = SessionRepository()
 
     private val _currentTask = MutableLiveData<RegularTask>()
     val currentTask: LiveData<RegularTask> = _currentTask
 
     private val _isTaskActiveForToday = MutableLiveData<Boolean>()
     val isTaskActiveForToday: LiveData<Boolean> = _isTaskActiveForToday
+
+    private val _isPhotosVisible = MutableLiveData<Boolean>()
+    val isPhotosVisible: LiveData<Boolean> = _isPhotosVisible
+
+    private var currentUserEmail: String? = null
+        set(value) {
+            _isPhotosVisible.value = value != null
+            field = value
+        }
 
     fun loadTaskInfo(taskId: Int) {
         viewModelScope.launch {
@@ -26,6 +37,8 @@ class InfoRegularTaskViewModel: ViewModel() {
 
             _isTaskActiveForToday.value = checkIfTaskActiveForToday(task) &&
                     task.status == TaskStatus.ACTIVE
+
+            currentUserEmail = sessionRepository.getEmailFromSession()
         }
     }
 

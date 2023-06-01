@@ -73,5 +73,10 @@ class InfoRegularTaskActivity : AppCompatActivity(R.layout.activity_info_regular
                 }
             }
         }
+
+        isPhotosVisible.observe(this@InfoRegularTaskActivity) {
+            viewBinding.infoRegularPhotoCard.isVisible = it &&
+                    viewModel.isTaskActiveForToday.value == false
+        }
     }
 }

@@ -260,7 +260,7 @@
                     app:layout_constraintTop_toBottomOf="@id/photoCardText" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/itemHomeRecycler"
+                    android:id="@+id/photoSingleRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
