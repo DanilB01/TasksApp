@@ -164,7 +164,7 @@ class HomeViewModel: ViewModel() {
             .map {
                 TaskInfo(
                     name = it.name!!,
-                    date = DateTimeUtils.getDateString(getNextTimestamp(it)!!),
+                    date = DateTimeUtils.getDateString(System.currentTimeMillis()),
                     status = TaskStatus.DONE,
                     task = it
                 )

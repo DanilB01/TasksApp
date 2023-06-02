@@ -1,5 +1,6 @@
 package ru.tsu.tasksapp.domain.task.regular
 
+import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.data.common.Database
 import ru.tsu.tasksapp.data.task.regular.RegularTaskEntity
 import ru.tsu.tasksapp.domain.task.TaskStatus
@@ -81,6 +82,10 @@ class RegularTaskRepository {
             id = task.id,
             status = TaskStatus.DONE.name
         )
+        Database.getRegularTaskDao().setCurrentDoneDate(
+            id = task.id,
+            timestamp = getNextTimestamp(task).toString()
+        )
     }
 
     suspend fun setCurrentTaskDoneTimestamp(task: RegularTask) {
@@ -108,4 +113,12 @@ class RegularTaskRepository {
     suspend fun deleteTaskById(id: Int) {
         Database.getRegularTaskDao().deleteRegularTasksById(id)
     }
+
+    private fun getNextTimestamp(task: RegularTask) = when(task.periodVariant) {
+        TaskPeriod.DAY -> DateTimeUtils.getNextDayTimestamp(task.creationTimestamp!!, task.periodValue!!)
+        TaskPeriod.WEEK -> DateTimeUtils.getNextWeekTimestamp(task.creationTimestamp!!, task.periodValue!!)
+        TaskPeriod.MONTH -> DateTimeUtils.getNextMonthTimestamp(task.creationTimestamp!!, task.periodValue!!)
+        null -> null
+    }
+
 }

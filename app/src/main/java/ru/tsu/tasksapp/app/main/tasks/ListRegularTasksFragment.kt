@@ -49,6 +49,7 @@ class ListRegularTasksFragment : Fragment(R.layout.fragment_list_regular_tasks) 
             endTimestamp = timestamp
             viewBinding.calendarDateText2.text =
                 "${DateTimeUtils.getDateString(startTimestamp!!)} - ${DateTimeUtils.getDateString(endTimestamp!!)}"
+            viewModel.updateTasks(startTimestamp!!, endTimestamp!!)
         }
     }
 

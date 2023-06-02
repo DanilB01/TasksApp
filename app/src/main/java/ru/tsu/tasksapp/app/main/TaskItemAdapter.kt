@@ -34,11 +34,7 @@ class TaskItemAdapter(
 
         fun bind(item: TaskInfo) = with(binding) {
             itemHomeTaskNameText.text = item.name
-            itemHomeTaskDateText.text = if (item.task is RegularTask){
-                "до ${item.date}"
-            } else {
-                item.date
-            }
+            itemHomeTaskDateText.text = item.date
 
             itemHomeRegularTaskIcon.isVisible = item.task is RegularTask
             itemHoneTaskRegularityText.isVisible = item.task is RegularTask

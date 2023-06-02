@@ -30,6 +30,7 @@ class ListRegularTaskViewModel: ViewModel() {
                 checkIfTaskCreatedInPeriod(it) ||
                 checkIfTaskLastDoneInPeriod(it)
             }
+            if (tasksInPeriod.isEmpty()) return@launch
 
             val res = mutableListOf<TaskInfo>()
             tasksInPeriod.forEach {
@@ -40,14 +41,16 @@ class ListRegularTaskViewModel: ViewModel() {
     }
 
     private fun checkIfTaskCreatedInPeriod(task: RegularTask) =
-        task.creationTimestamp!! < DateTimeUtils.atStartOfDay(startDateTimestamp!!) &&
-        task.creationTimestamp!! > DateTimeUtils.atEndOfDay(endDateTimestamp!!)
+        task.creationTimestamp!! > DateTimeUtils.atStartOfDay(startDateTimestamp!!) &&
+        task.creationTimestamp!! < DateTimeUtils.atEndOfDay(endDateTimestamp!!)
 
     private fun checkIfTaskLastDoneInPeriod(task: RegularTask) =
-        task.currentTaskDoneTimestamp!! < DateTimeUtils.atStartOfDay(startDateTimestamp!!) &&
-        task.currentTaskDoneTimestamp!! > DateTimeUtils.atEndOfDay(endDateTimestamp!!)
+        task.currentTaskDoneTimestamp != null &&
+        task.currentTaskDoneTimestamp > DateTimeUtils.atStartOfDay(startDateTimestamp!!) &&
+        task.currentTaskDoneTimestamp < DateTimeUtils.atEndOfDay(endDateTimestamp!!)
 
     private fun getTaskItems(task: RegularTask): List<TaskInfo> {
+        if (task.currentTaskDoneTimestamp == null) return emptyList()
         var currentStartTimestamp = startDateTimestamp ?: return emptyList()
         var currentEndTimestamp = endDateTimestamp ?: return emptyList()
 
@@ -55,7 +58,7 @@ class ListRegularTaskViewModel: ViewModel() {
             currentStartTimestamp = task.creationTimestamp
         }
 
-        if (task.currentTaskDoneTimestamp!! < currentEndTimestamp) {
+        if (task.currentTaskDoneTimestamp < currentEndTimestamp) {
             currentEndTimestamp = task.currentTaskDoneTimestamp
         }
 
