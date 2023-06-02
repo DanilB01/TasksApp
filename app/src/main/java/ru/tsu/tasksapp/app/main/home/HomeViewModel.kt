@@ -142,8 +142,7 @@ class HomeViewModel: ViewModel() {
                 /*System.currentTimeMillis() > DateTimeUtils.atStartOfDay(it.creationTimestamp!!) &&
                         System.currentTimeMillis() < DateTimeUtils.atEndOfDay(getNextTimestamp(it)!!) &&
                         it.status == TaskStatus.ACTIVE*/
-                it.currentTaskDoneTimestamp == null ||
-                System.currentTimeMillis() > DateTimeUtils.atEndOfDay(it.currentTaskDoneTimestamp)
+                checkIfTaskActive(it) && it.status == TaskStatus.ACTIVE
             }
             .map {
                 TaskInfo(
@@ -177,6 +176,9 @@ class HomeViewModel: ViewModel() {
         TaskPeriod.MONTH -> DateTimeUtils.getNextMonthTimestamp(task.creationTimestamp!!, task.periodValue!!)
         null -> null
     }
+
+    private fun checkIfTaskActive(task: RegularTask) = task.currentTaskDoneTimestamp == null ||
+            System.currentTimeMillis() > DateTimeUtils.atEndOfDay(task.currentTaskDoneTimestamp)
 
     private fun checkIsRegularTaskDone(task: RegularTask) = task.currentTaskDoneTimestamp != null &&
             System.currentTimeMillis() < DateTimeUtils.atEndOfDay(task.currentTaskDoneTimestamp)

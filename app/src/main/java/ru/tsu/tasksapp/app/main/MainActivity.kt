@@ -11,13 +11,16 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.main.calendar.CalendarFragment
 import ru.tsu.tasksapp.app.main.home.HomeFragment
+import ru.tsu.tasksapp.app.main.tasks.ListRegularTasksFragment
 import ru.tsu.tasksapp.app.menu.MenuActivity
 import ru.tsu.tasksapp.app.photo.ChoosePhotoBottomSheetDialog
 import ru.tsu.tasksapp.app.photo.WishAddPhotoListener
+import ru.tsu.tasksapp.app.task.dialog.DatePickerListener
 import ru.tsu.tasksapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(R.layout.activity_main),
-    WishAddPhotoListener {
+    WishAddPhotoListener,
+    DatePickerListener {
 
     private val viewBinding: ActivityMainBinding by viewBinding()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +49,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
                     replaceFragment(CalendarFragment())
                 }
                 R.id.item_main_tasks -> {
-                    mainTitle.text = "Регулярные задачи"
-                    hideFragments()
+                    mainTitle.text = "Завершенные задачи"
+                    replaceFragment(ListRegularTasksFragment())
                 }
             }
             true
@@ -61,17 +64,18 @@ class MainActivity : AppCompatActivity(R.layout.activity_main),
             .commit {
                 replace(
                     viewBinding.mainFragmentContainer.id,
-                    fragment
+                    fragment,
+                    "listRegularTask"
                 )
             }
-        viewBinding.mainFragmentContainer.isVisible = true
-    }
-
-    private fun hideFragments() {
-        viewBinding.mainFragmentContainer.isVisible = false
     }
 
     override fun addPhoto() {
         ChoosePhotoBottomSheetDialog().show(supportFragmentManager, "")
+    }
+
+    override fun getDate(dateTimestamp: Long) {
+        (supportFragmentManager.findFragmentByTag("listRegularTask") as ListRegularTasksFragment)
+            .setTimestamp(dateTimestamp)
     }
 }
