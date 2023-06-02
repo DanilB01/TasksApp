@@ -10,6 +10,7 @@ import ru.tsu.tasksapp.R
 import ru.tsu.tasksapp.app.common.DateTimeUtils
 import ru.tsu.tasksapp.app.main.TaskItemAdapter
 import ru.tsu.tasksapp.app.main.TaskItemListener
+import ru.tsu.tasksapp.app.photo.TaskValues
 import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskActivity
 import ru.tsu.tasksapp.app.task.regular.info.InfoRegularTaskViewModel
 import ru.tsu.tasksapp.app.task.single.info.InfoSingleTaskActivity
@@ -44,6 +45,10 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), TaskItemListener 
     override fun onTaskClicked(task: Task) {
         when (task) {
             is SingleTask -> {
+                TaskValues.setValues(
+                    currentTaskId = task.id,
+                    isForSingleTask = true
+                )
                 startActivity(
                     Intent(requireContext(), InfoSingleTaskActivity::class.java).apply {
                         putExtra("taskId", task.id)
@@ -51,6 +56,10 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar), TaskItemListener 
                 )
             }
             is RegularTask -> {
+                TaskValues.setValues(
+                    currentTaskId = task.id,
+                    isForSingleTask = true
+                )
                 startActivity(
                     Intent(requireContext(), InfoRegularTaskActivity::class.java).apply {
                         putExtra("taskId", task.id)

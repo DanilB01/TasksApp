@@ -29,8 +29,13 @@ class PhotoAdapter(
         private val binding: ItemPhotoBinding by lazy { ItemPhotoBinding.bind(view) }
 
         fun bind(item: PhotoItem) = with(binding) {
-            val bitmap = MediaStore.Images.Media.getBitmap(root.context.contentResolver, item.uri.toUri())
-            photoImage.setImageBitmap(bitmap)
+            try {
+                val bitmap = MediaStore.Images.Media.getBitmap(root.context.contentResolver, item.uri.toUri())
+                photoImage.setImageBitmap(bitmap)
+            } catch (e: java.lang.Exception) {
+                print(e.message)
+                e.printStackTrace()
+            }
             photoName.text = item.name
             photoSize.text = item.size
             protoRemoveImage.setOnClickListener {
