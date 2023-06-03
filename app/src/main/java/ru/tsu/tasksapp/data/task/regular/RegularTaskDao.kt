@@ -25,6 +25,9 @@ interface RegularTaskDao {
     @Query("UPDATE regular_tasks SET currentTaskDoneTimestamp = :timestamp WHERE id = :id")
     suspend fun setCurrentDoneDate(id: Int, timestamp: String)
 
+    @Query("UPDATE regular_tasks SET lastSettingNotificationTimestamp = :timestamp WHERE id = :id")
+    suspend fun setLastSettingNotificationDate(id: Int, timestamp: String)
+
     @Query("DELETE FROM regular_tasks WHERE id = :id")
     suspend fun deleteRegularTasksById(id: Int)
 }

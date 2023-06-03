@@ -13,5 +13,6 @@ data class RegularTask(
     val periodVariant: TaskPeriod? = null,
     val regularity: String? = null,
     val notificationTime: String? = null,
-    val status: TaskStatus = TaskStatus.ACTIVE
+    val status: TaskStatus = TaskStatus.ACTIVE,
+    val lastSettingNotificationTimestamp: Long? = null
 ) : Task

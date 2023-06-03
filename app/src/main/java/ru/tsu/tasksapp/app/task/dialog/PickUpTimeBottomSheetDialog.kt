@@ -33,11 +33,11 @@ class PickUpTimeBottomSheetDialog: BottomSheetDialogFragment() {
 
         pickupTimeButton.setOnClickListener {
             var hours = pickupTimeHours.text.toString()
-            if(hours.isEmpty()) {
+            if(hours.isEmpty() || hours.toInt() > 23) {
                 hours = "00"
             }
             var minutes = pickupTimeMinutes.text.toString()
-            if(minutes.isEmpty()) {
+            if(minutes.isEmpty() || minutes.toInt() > 59) {
                 minutes = "00"
             }
             (requireActivity() as TimePickerListener).getTime("$hours:$minutes")

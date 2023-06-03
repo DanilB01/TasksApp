@@ -20,7 +20,8 @@ class RegularTaskRepository {
                 periodVariant = TaskPeriod.valueOf(it.periodVariant),
                 regularity = it.regularity,
                 notificationTime = it.notificationTime,
-                status = TaskStatus.valueOf(it.status)
+                status = TaskStatus.valueOf(it.status),
+                lastSettingNotificationTimestamp = it.lastSettingNotificationTimestamp.toLongOrNull()
             )
         }
     }
@@ -45,7 +46,8 @@ class RegularTaskRepository {
                 notificationTime = task.notificationTime,
                 status = task.status.name,
                 creationTimestamp = task.creationTimestamp.toString(),
-                currentTaskDoneTimestamp = task.currentTaskDoneTimestamp.toString()
+                currentTaskDoneTimestamp = task.currentTaskDoneTimestamp.toString(),
+                lastSettingNotificationTimestamp = task.lastSettingNotificationTimestamp.toString()
             )
         )
     }
@@ -72,7 +74,8 @@ class RegularTaskRepository {
                 notificationTime = task.notificationTime,
                 status = task.status.name,
                 creationTimestamp = task.creationTimestamp.toString(),
-                currentTaskDoneTimestamp = task.currentTaskDoneTimestamp.toString()
+                currentTaskDoneTimestamp = task.currentTaskDoneTimestamp.toString(),
+                lastSettingNotificationTimestamp = task.lastSettingNotificationTimestamp.toString()
             )
         )
     }
@@ -94,6 +97,12 @@ class RegularTaskRepository {
         )
     }
 
+    suspend fun setLastSettingNotificationTimestamp(task: RegularTask) {
+        Database.getRegularTaskDao().setLastSettingNotificationDate(
+            task.id, task.lastSettingNotificationTimestamp.toString()
+        )
+    }
+
     suspend fun getTaskById(id: Int): RegularTask? {
         val entity = Database.getRegularTaskDao().getRegularTaskById(id) ?: return null
         return RegularTask(
@@ -106,7 +115,8 @@ class RegularTaskRepository {
             periodVariant = TaskPeriod.valueOf(entity.periodVariant),
             regularity = entity.regularity,
             notificationTime = entity.notificationTime,
-            status = TaskStatus.valueOf(entity.status)
+            status = TaskStatus.valueOf(entity.status),
+            lastSettingNotificationTimestamp = entity.lastSettingNotificationTimestamp.toLongOrNull()
         )
     }
 

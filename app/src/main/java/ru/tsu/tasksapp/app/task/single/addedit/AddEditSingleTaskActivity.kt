@@ -74,7 +74,6 @@ class AddEditSingleTaskActivity :
 
         addEditSaveButton.setOnClickListener {
             viewModel.saveSingleTask()
-            createNotificationChannel()
             scheduleNotification()
             finish()
         }
@@ -143,16 +142,6 @@ class AddEditSingleTaskActivity :
             time,
             pendingIntent
         )
-    }
-
-    private fun createNotificationChannel() {
-        val name = "Task channel"
-        val description = "Notification channel for tasks"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(channelId, name, importance)
-        channel.description = description
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
     }
 
     override fun getTime(time: String) {
