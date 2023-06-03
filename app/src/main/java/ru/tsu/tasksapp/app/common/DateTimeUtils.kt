@@ -1,5 +1,6 @@
 package ru.tsu.tasksapp.app.common
 
+import java.sql.Timestamp
 import java.text.DateFormat
 import java.util.*
 
@@ -53,5 +54,12 @@ object DateTimeUtils {
         newCalendar[Calendar.MONTH] = month
         newCalendar[Calendar.DAY_OF_MONTH] = dayOfMonth
         return newCalendar.timeInMillis
+    }
+
+    fun getTimestampForTime(timestamp: Long, hours: Int, minutes: Int): Long {
+        calendar.timeInMillis = timestamp
+        calendar[Calendar.HOUR_OF_DAY] = hours
+        calendar[Calendar.MINUTE] = minutes
+        return calendar.timeInMillis
     }
 }
